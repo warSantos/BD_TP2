@@ -1,0 +1,10 @@
+../dados_2017/DADOS/conjuntos/part.aa.json
+../dados_2017/DADOS/conjuntos/part.ab.json
+../dados_2017/DADOS/conjuntos/part.ac.json
+../dados_2017/DADOS/conjuntos/part.ad.json
+../dados_2017/DADOS/conjuntos/part.ae.json
+../dados_2017/DADOS/conjuntos/part.af.json
+../dados_2017/DADOS/conjuntos/part.ag.json
+../dados_2017/DADOS/conjuntos/part.ah.json
+../dados_2017/DADOS/conjuntos/part.ai.json
+../dados_2017/DADOS/conjuntos/part.aj.json
