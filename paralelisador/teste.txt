@@ -1,0 +1,10 @@
+../dados_2017/DADOS/conjuntos/part.aa
+../dados_2017/DADOS/conjuntos/part.ab
+../dados_2017/DADOS/conjuntos/part.ac
+../dados_2017/DADOS/conjuntos/part.ad
+../dados_2017/DADOS/conjuntos/part.ae
+../dados_2017/DADOS/conjuntos/part.af
+../dados_2017/DADOS/conjuntos/part.ag
+../dados_2017/DADOS/conjuntos/part.ah
+../dados_2017/DADOS/conjuntos/part.ai
+../dados_2017/DADOS/conjuntos/part.aj
