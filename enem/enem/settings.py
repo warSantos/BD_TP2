@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'enem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'enem2017',
+        'NAME': 'enem',
     }
 }
 

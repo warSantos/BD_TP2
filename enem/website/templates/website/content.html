@@ -5,7 +5,7 @@
         <div id="chart-fields">
             {% if participants %}
                 {% for participant in participants %}
-                    <input type="hidden" name="{{ participant.age }}" m_value="{{ participant.m_value }}" f_value="{{ participant.f_value }}"></input>
+                    <input type="hidden" name="{{ participant.age }}" count="{{ participant.count }}"></input>
                 {% endfor %}
             {% endif %}
         </div>
