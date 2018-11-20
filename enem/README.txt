@@ -1,6 +1,7 @@
 ###### INSTALL ######
 
 pip install djongo
+pip install djangoajax
 pip install pylint-django
 deletar do DB documento com campos iguais
 

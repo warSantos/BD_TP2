@@ -155,8 +155,8 @@ section h2 {
 header.masthead {
   position: relative;
   width: 100%;
-  padding-top: 150px;
-  padding-bottom: 100px;
+  height: 100vh;
+  min-height: 775px;
   color: white;
   background: url("../img/bg-pattern.png"), #FFF176;
   background: url("../img/bg-pattern.png"), -webkit-gradient(linear, right top, left top, from(#FFF176), to(#FDD835));
@@ -184,12 +184,6 @@ header.masthead .device-container .screen img {
 }
 
 @media (min-width: 992px) {
-  header.masthead {
-    height: 100vh;
-    min-height: 775px;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
   header.masthead .header-content {
     margin-bottom: 0;
     text-align: left;

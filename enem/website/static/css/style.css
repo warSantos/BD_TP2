@@ -1,4 +1,156 @@
 #chart-area {
     width: 100%;
     height: 500px;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1vw;
+    border-radius: 1vw;
+    text-align: center !important;
+    display: none;
+}
+
+.amcharts-chart-div {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#sidebarCollapse {
+    font-size: 2vw;
+    padding: 1vw;
+    position: absolute;
+    color: #7386D5;
+    cursor: pointer;
+}
+
+.loading-img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar h3 {
+    text-align: center;
+}
+
+#sidebar ul p {
+    text-align: center;
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+@media (max-width: 1024px) {
+    #sidebarCollapse {
+        font-size: 3vw;
+        padding: 1.5vw;
+    }    
+}
+
+@media (max-width: 768px) {
+    #sidebarCollapse {
+        font-size: 4vw;
+        padding: 2vw;
+    }    
+}
+
+@media (max-width: 425px) {
+    #sidebarCollapse {
+        font-size: 6vw;
+        padding: 3vw;
+    }    
 }
