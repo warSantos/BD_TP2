@@ -38,14 +38,30 @@ def dataNumberByGenreView(request):
 
 @ajax
 def dataPerformanceByGenreView(request):
-    # query_objects1 = Participant.objects.values('TP_SEXO').annotate(COUNT=Count('TP_SEXO')).order_by('TP_SEXO')
-    # query_objects_NU_NOTA_CN = Participant.objects.values('TP_SEXO').annotate(COUNT=Sum('NU_NOTA_CN'))
-    query_objects_NU_NOTA_CN = Participant.objects.all().aggregate(Avg('NU_NOTA_CN'))
-    # participants = []
-    # participants.append({"genre": "M", "media": query_objects_NU_NOTA_CN / query_objects1})
-    print(query_objects_NU_NOTA_CN)
+    query_objects = Participant.objects.values('TP_SEXO').annotate(COUNT=Count('TP_SEXO')).order_by('TP_SEXO')
+    query_objects_NU_NOTA = Participant.objects.values('TP_SEXO').annotate(
+        SUM_NU_NOTA_CN=Sum('NU_NOTA_CN'),
+        SUM_NU_NOTA_CH=Sum('NU_NOTA_CH'),
+        SUM_NU_NOTA_LC=Sum('NU_NOTA_LC'),
+        SUM_NU_NOTA_MT=Sum('NU_NOTA_MT')
+    ).order_by('TP_SEXO')
+    print(query_objects )
+    print(query_objects_NU_NOTA)
+    participants = []
+    for obj in query_objects:
+        for obj_sum in query_objects_NU_NOTA:
+            if (obj['TP_SEXO'] == obj_sum['TP_SEXO']):
+                participants.append({
+                    "genre": obj['TP_SEXO'],
+                    "media_NOTA_CN": obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT'],
+                    "media_NOTA_CH": obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT'],
+                    "media_NOTA_LC": obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT'],
+                    "media_NOTA_MT": obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']
+                })
+                break
+    print(participants)
     data = {
-      'result': query_objects_NU_NOTA_CN
+      'result': participants
     }
     return data
 

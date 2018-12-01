@@ -114,6 +114,7 @@ function performanceByGenreChart() {
     url: 'performancebygenre',
     dataType: 'json',
     success: function (data) {
+      console.log(data);
       $('#chart-area').html("");
       dataProvider = [];
       max = 0;
