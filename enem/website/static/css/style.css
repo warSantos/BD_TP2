@@ -19,6 +19,7 @@
     position: absolute;
     color: #7386D5;
     cursor: pointer;
+    z-index: 99;
 }
 
 .loading-img {
@@ -105,10 +106,10 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-ul ul a {
+#sidebar ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #7386D5;
 }
 
 ul.CTAs {

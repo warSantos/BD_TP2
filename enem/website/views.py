@@ -1,12 +1,12 @@
 from django.views import generic
-from django.db.models import Count
+from django.db.models import Count, Sum, Avg
 from django.shortcuts import render
 from django_ajax.decorators import ajax
 
 from enem.models import Participant
 
 @ajax
-def dataAgeView(request):
+def dataNumberByAgeView(request):
     query_objects = Participant.objects.values('NU_IDADE').annotate(COUNT=Count('NU_IDADE')).order_by('NU_IDADE')
     participants = []
     participants.append({"age": "0-9", "count": 0})
@@ -29,10 +29,23 @@ def dataAgeView(request):
     return data
 
 @ajax
-def dataGenreView(request):
+def dataNumberByGenreView(request):
     query_objects = Participant.objects.values('TP_SEXO').annotate(COUNT=Count('TP_SEXO')).order_by('TP_SEXO')
     data = {
       'result': query_objects
+    }
+    return data
+
+@ajax
+def dataPerformanceByGenreView(request):
+    # query_objects1 = Participant.objects.values('TP_SEXO').annotate(COUNT=Count('TP_SEXO')).order_by('TP_SEXO')
+    # query_objects_NU_NOTA_CN = Participant.objects.values('TP_SEXO').annotate(COUNT=Sum('NU_NOTA_CN'))
+    query_objects_NU_NOTA_CN = Participant.objects.all().aggregate(Avg('NU_NOTA_CN'))
+    # participants = []
+    # participants.append({"genre": "M", "media": query_objects_NU_NOTA_CN / query_objects1})
+    print(query_objects_NU_NOTA_CN)
+    data = {
+      'result': query_objects_NU_NOTA_CN
     }
     return data
 

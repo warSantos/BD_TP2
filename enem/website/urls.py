@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('age', views.dataAgeView, name='dataAgeView'),
-    path('genre', views.dataGenreView, name='dataGenreView')
-    # path('age', views.IndexView.as_view(), name='index')
+    path('numberbyage', views.dataNumberByAgeView, name='dataNumberByAgeView'),
+    path('numberbygenre', views.dataNumberByGenreView, name='dataNumberByGenreView'),
+
+    path('performancebygenre', views.dataPerformanceByGenreView, name='dataPerformanceByGenreView')
 ]
