@@ -47,18 +47,18 @@ function numberByGenreChart() {
         switch(value.TP_SEXO) {
           case "F":
             dataProvider.push({
-                "name": "Feminino",
-                "points": value.COUNT,
-                "color": "#ff7979",
-                "bullet": "/static/img/female_avatar.png"
+              "name": "Feminino",
+              "points": value.COUNT,
+              "color": "#ff7979",
+              "bullet": "/static/img/female_avatar.png"
             });
             break;
           case "M":
             dataProvider.push({
-                "name": "Masculino",
-                "points": value.COUNT,
-                "color": "#22a6b3",
-                "bullet": "/static/img/male_avatar.png"
+              "name": "Masculino",
+              "points": value.COUNT,
+              "color": "#22a6b3",
+              "bullet": "/static/img/male_avatar.png"
             });
             break;
         }
@@ -69,24 +69,24 @@ function numberByGenreChart() {
           "theme": "light",
           "dataProvider": dataProvider,
           "valueAxes": [{
-              "maximum": max,
-              "minimum": 0,
-              "axisAlpha": 0,
-              "dashLength": 4,
-              "position": "left"
+            "maximum": max,
+            "minimum": 0,
+            "axisAlpha": 0,
+            "dashLength": 4,
+            "position": "left"
           }],
           "startDuration": 1,
           "graphs": [{
-              "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
-              "bulletOffset": 10,
-              "bulletSize": 52,
-              "colorField": "color",
-              "cornerRadiusTop": 8,
-              "customBulletField": "bullet",
-              "fillAlphas": 0.8,
-              "lineAlpha": 0,
-              "type": "column",
-              "valueField": "points"
+            "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
+            "bulletOffset": 10,
+            "bulletSize": 52,
+            "colorField": "color",
+            "cornerRadiusTop": 8,
+            "customBulletField": "bullet",
+            "fillAlphas": 0.8,
+            "lineAlpha": 0,
+            "type": "column",
+            "valueField": "points"
           }],
           "marginTop": 0,
           "marginRight": 0,
@@ -95,10 +95,10 @@ function numberByGenreChart() {
           "autoMargins": false,
           "categoryField": "name",
           "categoryAxis": {
-              "axisAlpha": 0,
-              "gridAlpha": 0,
-              "inside": true,
-              "tickLength": 0
+            "axisAlpha": 0,
+            "gridAlpha": 0,
+            "inside": true,
+            "tickLength": 0
           },
           "export": {
             "enabled": true
@@ -117,67 +117,69 @@ function performanceByGenreChart() {
       console.log(data);
       $('#chart-area').html("");
       dataProvider = [];
-      max = 0;
-      $.each(data.content.result, function(index, value) {        
-        switch(value.TP_SEXO) {
-          case "F":
-            dataProvider.push({
-                "name": "Feminino",
-                "points": value.COUNT,
-                "color": "#ff7979",
-                "bullet": "/static/img/female_avatar.png"
-            });
-            break;
-          case "M":
-            dataProvider.push({
-                "name": "Masculino",
-                "points": value.COUNT,
-                "color": "#22a6b3",
-                "bullet": "/static/img/male_avatar.png"
-            });
-            break;
+      values = {};
+      values["Tipo"] = "Nota CH"
+      $.each(data.content.result, function(index, value) {
+        if (value.genre == "F") {
+          values["Feminino"] = value.media_NOTA_CH;
+        } else {
+          values["Masculino"] = value.media_NOTA_CH;
         }
-        max += value.COUNT;
       });
+      dataProvider.push(values);
+      values["Tipo"] = "Nota CN"
+      $.each(data.content.result, function(index, value) {
+        if (value.genre == "F") {
+          values["Feminino"] = value.media_NOTA_CN;
+        } else {
+          values["Masculino"] = value.media_NOTA_CN;
+        }
+      });
+      dataProvider.push(values);
+      values["Tipo"] = "Nota LC"
+      $.each(data.content.result, function(index, value) {
+        if (value.genre == "F") {
+          values["Feminino"] = value.media_NOTA_LC;
+        } else {
+          values["Masculino"] = value.media_NOTA_LC;
+        }
+      });
+      dataProvider.push(values);
+      values["Tipo"] = "Nota MT"
+      $.each(data.content.result, function(index, value) {
+        if (value.genre == "F") {
+          values["Feminino"] = value.media_NOTA_MT;
+        } else {
+          values["Masculino"] = value.media_NOTA_MT;
+        }
+      });
+      dataProvider.push(values);
+      console.log(dataProvider);
       AmCharts.makeChart("chart-area", {
-          "type": "serial",
-          "theme": "light",
-          "dataProvider": dataProvider,
-          "valueAxes": [{
-              "maximum": max,
-              "minimum": 0,
-              "axisAlpha": 0,
-              "dashLength": 4,
-              "position": "left"
-          }],
-          "startDuration": 1,
-          "graphs": [{
-              "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
-              "bulletOffset": 10,
-              "bulletSize": 52,
-              "colorField": "color",
-              "cornerRadiusTop": 8,
-              "customBulletField": "bullet",
-              "fillAlphas": 0.8,
-              "lineAlpha": 0,
-              "type": "column",
-              "valueField": "points"
-          }],
-          "marginTop": 0,
-          "marginRight": 0,
-          "marginLeft": 0,
-          "marginBottom": 0,
-          "autoMargins": false,
-          "categoryField": "name",
-          "categoryAxis": {
-              "axisAlpha": 0,
-              "gridAlpha": 0,
-              "inside": true,
-              "tickLength": 0
-          },
-          "export": {
-            "enabled": true
-          }
+        "type": "radar",
+        "theme": "light",
+        "dataProvider": dataProvider,
+        "startDuration": 1,
+        "valueAxes": [{
+          "maximum": 1000,
+          "minimum": 0
+        }],
+        "graphs": [ {
+          "balloonText": "Feminino: [[value]]",
+          "bullet": "round",
+          "lineThickness": 2,
+          "valueField": "Feminino"
+        },
+        {
+          "balloonText": "Masculino: [[value]]",
+          "bullet": "round",
+          "lineThickness": 2,
+          "valueField": "Masculino"
+        }],
+        "categoryField": "Tipo",
+        "export": {
+          "enabled": true
+        }
       });
     }
   });

@@ -45,8 +45,6 @@ def dataPerformanceByGenreView(request):
         SUM_NU_NOTA_LC=Sum('NU_NOTA_LC'),
         SUM_NU_NOTA_MT=Sum('NU_NOTA_MT')
     ).order_by('TP_SEXO')
-    print(query_objects )
-    print(query_objects_NU_NOTA)
     participants = []
     for obj in query_objects:
         for obj_sum in query_objects_NU_NOTA:
@@ -59,7 +57,6 @@ def dataPerformanceByGenreView(request):
                     "media_NOTA_MT": obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']
                 })
                 break
-    print(participants)
     data = {
       'result': participants
     }
