@@ -7,5 +7,5 @@ urlpatterns = [
     path('numberbyage', views.dataNumberByAgeView, name='dataNumberByAgeView'),
     path('numberbygenre', views.dataNumberByGenreView, name='dataNumberByGenreView'),
     path('performancebygenre', views.dataPerformanceByGenreView, name='dataPerformanceByGenreView'),
-    path('performancebyestados',views.dataperformanceByEstadosView, name='dataPerformanceByEstadosChart')
+    path('performancebyestados',views.dataperformanceByEstadosView, name='dataPerformanceByEstadosView')
 ]

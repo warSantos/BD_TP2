@@ -188,7 +188,7 @@ function performanceByGenreChart() {
 function performanceByEstadosChart(){
   showLoading();
   $.ajax({
-    url: 'performanceByEstadosChart',
+    url: 'performancebyestados',
     dataType: 'json',
     success: function(data){
       console.log(data);
@@ -197,53 +197,268 @@ function performanceByEstadosChart(){
       values={};
       values["Tipo"]="Nota CH"
       $.each(data.content.result,function(index,value){
-          if(value.estado =='AC'){
-            value["Acre"]=value.media_NOTA_CH;
-          }else if(value.estado =='AL'){
-            value["Alagoas"]=value.media_NOTA_CH;
-          }else if(value.estado=='AP'){
-            value["Amapá"]=value.media_NOTA_CH;
-          }else if(value.estado=='AM'){
-            value["Amazonas"]=value.media_NOTA_CH;
-          }else if(value.estado=='BA'){
-            value["Bahia"]=value.media_NOTA_CH;
-          }else if(value.estado='CE'){
-            value["Ceará"]=value.media_NOTA_CH;
-          }else if(value.estado='DF'){
-            value["Distrito Federa"]=value.media_NOTA_CH;
-          }else if(value.estado='ES'){
-            value["Espírito Santo"]=value.media_NOTA_CH;
-          }else if(value.estado='GO'){
-            value["Goiás"]=value.media_NOTA_CH;
-          }else if(value.estado='MA'){
-            value["Maranhão"]=value.media_NOTA_CH;
-          }else if(value.estado='MT'){
-            value["Mato Grosso"]=value.media_NOTA_CH;
-          }else if(value.estado='MS'){
-            value["Mato Grosso do Sul"]=value.media_NOTA_CH;
-          }else if(value.estado='MG'){
-            value["Minas Gerais"]=value.media_NOTA_CH;
-          }else if(value.estado='PA'){
-            value["Pará"]=value.media_NOTA_CH;
-          }else if(value.estado='PB'){
-            value["Paraíba"]=value.media_NOTA_CH;
-          }else if(value.estado='PR'){
-            value["Paraná"]=value.media_NOTA_CH;
-          }else if(value.estado='PE'){
-           value["Pernambuco"]=value.media_NOTA_CH; 
-          }else if(value.estado='PI'){
-            value["Piauí"]=value.media_NOTA_CH;
-          }else if(value.estado='RJ'){
-            value["Rio de Janeiro"]=value.media_NOTA_CH;
-          }else if(value.estado='RN'){
-            value["Rio Grande do Norte"]=value.media_NOTA_CH;
-          }else if(value.estado='RS'){
-            value["Rio Grande do Sul"]=value.media_NOTA_CH;
-          }
-          
-      })
+        if(value.estado =='AC'){
+          value["Acre"]=value.media_NOTA_CH;
+        }else if(value.estado =='AL'){
+          value["Alagoas"]=value.media_NOTA_CH;
+        }else if(value.estado=='AP'){
+          value["Amapá"]=value.media_NOTA_CH;
+        }else if(value.estado=='AM'){
+          value["Amazonas"]=value.media_NOTA_CH;
+        }else if(value.estado=='BA'){
+          value["Bahia"]=value.media_NOTA_CH;
+        }else if(value.estado='CE'){
+          value["Ceará"]=value.media_NOTA_CH;
+        }else if(value.estado='DF'){
+          value["Distrito Federa"]=value.media_NOTA_CH;
+        }else if(value.estado='ES'){
+          value["Espírito Santo"]=value.media_NOTA_CH;
+        }else if(value.estado='GO'){
+          value["Goiás"]=value.media_NOTA_CH;
+        }else if(value.estado='MA'){
+          value["Maranhão"]=value.media_NOTA_CH;
+        }else if(value.estado='MT'){
+          value["Mato Grosso"]=value.media_NOTA_CH;
+        }else if(value.estado='MS'){
+          value["Mato Grosso do Sul"]=value.media_NOTA_CH;
+        }else if(value.estado='MG'){
+          value["MinasGerais"]=value.media_NOTA_CH;
+        }else if(value.estado='PA'){
+          value["Pará"]=value.media_NOTA_CH;
+        }else if(value.estado='PB'){
+          value["Paraíba"]=value.media_NOTA_CH;
+        }else if(value.estado='PR'){
+          value["Paraná"]=value.media_NOTA_CH;
+        }else if(value.estado='PE'){
+          value["Pernambuco"]=value.media_NOTA_CH; 
+        }else if(value.estado='PI'){
+          value["Piauí"]=value.media_NOTA_CH;
+        }else if(value.estado='RJ'){
+          value["Rio de Janeiro"]=value.media_NOTA_CH;
+        }else if(value.estado='RN'){
+          value["Rio Grande do Norte"]=value.media_NOTA_CH;
+        }else if(value.estado='RS'){
+          value["Rio Grande do Sul"]=value.media_NOTA_CH;
+        }else if(value.estado='RO'){
+          value["Rondônia"]=value.media_NOTA_CH;
+        }else if(value.estado='RR'){
+          value["Roraima"]=value.media_NOTA_CH;
+        }else if(value.estado='SC'){
+          value['Santa Catarina']=value.media_NOTA_CH;
+        }else if(value.estado='SP'){
+          value["SaoPaulo"]=value.media_NOTA_CH;
+        }else if(value.estado='SE'){
+          value["Sergipe"]=value.media_NOTA_CH;
+        }else if(value.estado='TO'){
+          value["Tocantins"]=value.media_NOTA_CH;
+        } 
+      });
+      dataProvider.push(values);
+      values["Tipo"]="Nota CN"
+      $.each(data.content.result,function(index,value){
+        if(value.estado =='AC'){
+          value["Acre"]=value.media_NOTA_CN;
+        }else if(value.estado =='AL'){
+          value["Alagoas"]=value.media_NOTA_CN;
+        }else if(value.estado=='AP'){
+          value["Amapá"]=value.media_NOTA_CN;
+        }else if(value.estado=='AM'){
+          value["Amazonas"]=value.media_NOTA_CN;
+        }else if(value.estado=='BA'){
+          value["Bahia"]=value.media_NOTA_CN;
+        }else if(value.estado='CE'){
+          value["Ceará"]=value.media_NOTA_CN;
+        }else if(value.estado='DF'){
+          value["Distrito Federa"]=value.media_NOTA_CN;
+        }else if(value.estado='ES'){
+          value["Espírito Santo"]=value.media_NOTA_CN;
+        }else if(value.estado='GO'){
+          value["Goiás"]=value.media_NOTA_CN;
+        }else if(value.estado='MA'){
+          value["Maranhão"]=value.media_NOTA_CN;
+        }else if(value.estado='MT'){
+          value["Mato Grosso"]=value.media_NOTA_CN;
+        }else if(value.estado='MS'){
+          value["Mato Grosso do Sul"]=value.media_NOTA_CN;
+        }else if(value.estado='MG'){
+          value["MinasGerais"]=value.media_NOTA_CN;
+        }else if(value.estado='PA'){
+          value["Pará"]=value.media_NOTA_CN;
+        }else if(value.estado='PB'){
+          value["Paraíba"]=value.media_NOTA_CN;
+        }else if(value.estado='PR'){
+          value["Paraná"]=value.media_NOTA_CN;
+        }else if(value.estado='PE'){
+          value["Pernambuco"]=value.media_NOTA_CN; 
+        }else if(value.estado='PI'){
+          value["Piauí"]=value.media_NOTA_CN;
+        }else if(value.estado='RJ'){
+          value["Rio de Janeiro"]=value.media_NOTA_CN;
+        }else if(value.estado='RN'){
+          value["Rio Grande do Norte"]=value.media_NOTA_CN;
+        }else if(value.estado='RS'){
+          value["Rio Grande do Sul"]=value.media_NOTA_CN;
+        }else if(value.estado='RO'){
+          value["Rondônia"]=value.media_NOTA_CN;
+        }else if(value.estado='RR'){
+          value["Roraima"]=value.media_NOTA_CN;
+        }else if(value.estado='SC'){
+          value['Santa Catarina']=value.media_NOTA_CN;
+        }else if(value.estado='SP'){
+          value["SaoPaulo"]=value.media_NOTA_CN;
+        }else if(value.estado='SE'){
+          value["Sergipe"]=value.media_NOTA_CN;
+        }else if(value.estado='TO'){
+          value["Tocantins"]=value.media_NOTA_CN;
+        } 
+      });
+      dataProvider.push(values);
+      values["Tipo"] = "Nota LC"
+      $.each(data.content.result,function(index,value){
+        if(value.estado =='AC'){
+          value["Acre"]=value.media_NOTA_LC;
+        }else if(value.estado =='AL'){
+          value["Alagoas"]=value.media_NOTA_LC;
+        }else if(value.estado=='AP'){
+          value["Amapá"]=value.media_NOTA_LC;
+        }else if(value.estado=='AM'){
+          value["Amazonas"]=value.media_NOTA_LC;
+        }else if(value.estado=='BA'){
+          value["Bahia"]=value.media_NOTA_LC;
+        }else if(value.estado='CE'){
+          value["Ceará"]=value.media_NOTA_LC;
+        }else if(value.estado='DF'){
+          value["Distrito Federa"]=value.media_NOTA_LC;
+        }else if(value.estado='ES'){
+          value["Espírito Santo"]=value.media_NOTA_LC;
+        }else if(value.estado='GO'){
+          value["Goiás"]=value.media_NOTA_LC;
+        }else if(value.estado='MA'){
+          value["Maranhão"]=value.media_NOTA_LC;
+        }else if(value.estado='MT'){
+          value["Mato Grosso"]=value.media_NOTA_LC;
+        }else if(value.estado='MS'){
+          value["Mato Grosso do Sul"]=value.media_NOTA_LC;
+        }else if(value.estado='MG'){
+          value["MinasGerais"]=value.media_NOTA_LC;
+        }else if(value.estado='PA'){
+          value["Pará"]=value.media_NOTA_LC;
+        }else if(value.estado='PB'){
+          value["Paraíba"]=value.media_NOTA_LC;
+        }else if(value.estado='PR'){
+          value["Paraná"]=value.media_NOTA_LC;
+        }else if(value.estado='PE'){
+          value["Pernambuco"]=value.media_NOTA_LC; 
+        }else if(value.estado='PI'){
+          value["Piauí"]=value.media_NOTA_LC;
+        }else if(value.estado='RJ'){
+          value["Rio de Janeiro"]=value.media_NOTA_LC;
+        }else if(value.estado='RN'){
+          value["Rio Grande do Norte"]=value.media_NOTA_LC;
+        }else if(value.estado='RS'){
+          value["Rio Grande do Sul"]=value.media_NOTA_LC;
+        }else if(value.estado='RO'){
+          value["Rondônia"]=value.media_NOTA_LC;
+        }else if(value.estado='RR'){
+          value["Roraima"]=value.media_NOTA_LC;
+        }else if(value.estado='SC'){
+          value['Santa Catarina']=value.media_NOTA_LC;
+        }else if(value.estado='SP'){
+          value["SaoPaulo"]=value.media_NOTA_LC;
+        }else if(value.estado='SE'){
+          value["Sergipe"]=value.media_NOTA_LC;
+        }else if(value.estado='TO'){
+          value["Tocantins"]=value.media_NOTA_LC;
+        } 
+      });
+      dataProvider.push(values);
+      values["Tipo"] = "Nota MT"
+      $.each(data.content.result,function(index,value){
+        if(value.estado =='AC'){
+          value["Acre"]=value.media_NOTA_MT;
+        }else if(value.estado =='AL'){
+          value["Alagoas"]=value.media_NOTA_MT;
+        }else if(value.estado=='AP'){
+          value["Amapá"]=value.media_NOTA_MT;
+        }else if(value.estado=='AM'){
+          value["Amazonas"]=value.media_NOTA_MT;
+        }else if(value.estado=='BA'){
+          value["Bahia"]=value.media_NOTA_MT;
+        }else if(value.estado='CE'){
+          value["Ceará"]=value.media_NOTA_MT;
+        }else if(value.estado='DF'){
+          value["Distrito Federa"]=value.media_NOTA_MT;
+        }else if(value.estado='ES'){
+          value["Espírito Santo"]=value.media_NOTA_MT;
+        }else if(value.estado='GO'){
+          value["Goiás"]=value.media_NOTA_MT;
+        }else if(value.estado='MA'){
+          value["Maranhão"]=value.media_NOTA_MT;
+        }else if(value.estado='MT'){
+          value["Mato Grosso"]=value.media_NOTA_MT;
+        }else if(value.estado='MS'){
+          value["Mato Grosso do Sul"]=value.media_NOTA_MT;
+        }else if(value.estado='MG'){
+          value["MinasGerais"]=value.media_NOTA_MT;
+        }else if(value.estado='PA'){
+          value["Pará"]=value.media_NOTA_MT;
+        }else if(value.estado='PB'){
+          value["Paraíba"]=value.media_NOTA_MT;
+        }else if(value.estado='PR'){
+          value["Paraná"]=value.media_NOTA_MT;
+        }else if(value.estado='PE'){
+          value["Pernambuco"]=value.media_NOTA_MT; 
+        }else if(value.estado='PI'){
+          value["Piauí"]=value.media_NOTA_MT;
+        }else if(value.estado='RJ'){
+          value["Rio de Janeiro"]=value.media_NOTA_MT;
+        }else if(value.estado='RN'){
+          value["Rio Grande do Norte"]=value.media_NOTA_MT;
+        }else if(value.estado='RS'){
+          value["Rio Grande do Sul"]=value.media_NOTA_MT;
+        }else if(value.estado='RO'){
+          value["Rondônia"]=value.media_NOTA_MT;
+        }else if(value.estado='RR'){
+          value["Roraima"]=value.media_NOTA_MT;
+        }else if(value.estado='SC'){
+          value['Santa Catarina']=value.media_NOTA_MT;
+        }else if(value.estado='SP'){
+          value["SaoPaulo"]=value.media_NOTA_MT;
+        }else if(value.estado='SE'){
+          value["Sergipe"]=value.media_NOTA_MT;
+        }else if(value.estado='TO'){
+          value["Tocantins"]=value.media_NOTA_MT;
+        } 
+      });
+      dataProvider.push(values);
+      console.log(dataProvider);
+      AmCharts.makeChart("chart-area", {
+        "type": "radar",
+        "theme": "light",
+        "dataProvider": dataProvider,
+        "startDuration": 1,
+        "valueAxes": [{
+          "maximum": 1000,
+          "minimum": 0
+        }],
+        "graphs": [ {
+          "balloonText": "MinasGerais: [[value]]",
+          "bullet": "round",
+          "lineThickness": 2,
+          "valueField": "MinasGerais"
+        },
+        {
+          "balloonText": "SãoPaulo: [[value]]",
+          "bullet": "round",
+          "lineThickness": 2,
+          "valueField": "SaoPaulo"
+        }],
+        "categoryField": "Tipo",
+        "export": {
+          "enabled": true
+        }
+      });
     }
-  
   });
 }
 
