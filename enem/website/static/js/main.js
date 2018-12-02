@@ -1,36 +1,7 @@
 function showLoading() {
-  $("#chart-area").hide("slow", function() {
+  $("#chart-content").hide("slow", function() {
     $('#chart-area').html("<img src='/static/img/loading.gif' class='loading-img' alt=''></img>");
-    $('#chart-area').show("slow");
-  });
-}
-
-function numberByAgeChart() {
-  showLoading();
-  $.ajax({
-    url: 'numberbyage',
-    dataType: 'json',
-    success: function (data) {
-      $('#chart-area').html("");
-      AmCharts.makeChart("chart-area", {
-        "type": "pie",
-        "theme": "light",
-        "dataProvider": data.content.result,
-        "valueField": "count",
-        "titleField": "age",
-        "balloon":{
-        "fixedPosition":true
-        },
-        "legend":{
-          "position":"right",
-        "marginRight":100,
-        "autoMargins":false
-      },
-        "export": {
-          "enabled": true
-        }
-      });
-    }
+    $('#chart-content').show("slow");
   });
 }
 
@@ -108,17 +79,200 @@ function numberByGenreChart() {
   });
 }
 
+function numberByAgeChart() {
+  showLoading();
+  $.ajax({
+    url: 'numberbyage',
+    dataType: 'json',
+    success: function (data) {
+      $('#chart-area').html("");
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",
+        "theme": "light",
+        "dataProvider": data.content.result,
+        "valueField": "count",
+        "titleField": "age",
+        "balloon":{
+        "fixedPosition":true
+        },
+        "legend":{
+          "position":"right",
+          "marginRight":100,
+          "autoMargins":false
+        },
+        "export": {
+          "enabled": true
+        }
+      });
+    }
+  });
+}
+
+function numberByLanguageChart() {
+  showLoading();
+  $.ajax({
+    url: 'numberbylanguage',
+    dataType: 'json',
+    success: function (data) {
+      $('#chart-area').html("");
+      dataProvider = [];
+      $.each(data.content.result, function(index, value) {        
+        switch(value.TP_LINGUA) {
+          case "0":
+            dataProvider.push({
+              "title": "Inglês",
+              "value": value.COUNT
+            });
+            break;
+          case "1":
+            dataProvider.push({
+              "title": "Espanhol",
+              "value": value.COUNT
+            });
+            break;
+        }
+      });
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",
+        "theme": "light",
+        "dataProvider": dataProvider,
+        "titleField": "title",
+        "valueField": "value",
+        "labelRadius": 5,
+        "radius": "42%",
+        "innerRadius": "60%",
+        "labelText": "[[title]]",
+        "legend":{
+          "position":"right",
+          "marginRight":100,
+          "autoMargins":false
+        },
+        "export": {
+          "enabled": true
+        }
+      });
+    }
+  });
+}
+
+function numberByInternetChart() {
+  showLoading();
+  $.ajax({
+    url: 'numberbyinternet',
+    dataType: 'json',
+    success: function (data) {
+      $('#chart-area').html("");
+      dataProvider = [];
+      $.each(data.content.result, function(index, value) {        
+        switch(value.Q025) {
+          case "A":
+            dataProvider.push({
+              "title": "Não",
+              "value": value.COUNT
+            });
+            break;
+          case "B":
+            dataProvider.push({
+              "title": "Sim",
+              "value": value.COUNT
+            });
+            break;
+        }
+      });
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",
+        "theme": "light",
+        "dataProvider": dataProvider,
+        "titleField": "title",
+        "valueField": "value",
+        "labelRadius": 5,
+        "radius": "42%",
+        "innerRadius": "60%",
+        "labelText": "[[title]]",
+        "legend":{
+          "position":"right",
+          "marginRight":100,
+          "autoMargins":false
+        },
+        "export": {
+          "enabled": true
+        }
+      });
+    }
+  });
+}
+
+
+function numberByPresenceChart() {
+  showLoading();
+  $.ajax({
+    url: 'numberbypresence',
+    dataType: 'json',
+    success: function (data) {
+      console.log(data.content.result);
+      $('#chart-area').html("");
+      AmCharts.makeChart("chart-area", {
+        "theme": "light",
+        "type": "serial",
+        "dataProvider": data.content.result,
+        "startDuration": 1,
+        "graphs": [{
+            "balloonText": "Presentes: [[value]]",
+            "fillAlphas": 0.9,
+            "lineAlpha": 0.2,
+            "title": "Presentes",
+            "type": "column",
+            "clustered":false,
+            "columnWidth":0.3,
+            "valueField": "Presentes"
+        }, {
+            "balloonText": "Ausentes: [[value]]",
+            "fillAlphas": 0.9,
+            "lineAlpha": 0.2,
+            "title": "Ausentes",
+            "type": "column",
+            "clustered":false,
+            "columnWidth":0.4,
+            "valueField": "Ausentes"
+        }, {
+          "balloonText": "Eliminados: [[value]]",
+          "fillAlphas": 0.9,
+          "lineAlpha": 0.2,
+          "title": "Eliminados",
+          "type": "column",
+          "clustered":false,
+          "columnWidth":0.5,
+          "valueField": "Eliminados"
+        }],
+        "plotAreaFillAlphas": 0.1,
+        "categoryField": "Dia",
+        "categoryAxis": {
+            "gridPosition": "start"
+        },
+        "legend":{
+          "position":"right",
+          "marginRight":100,
+          "autoMargins":false
+        },
+        "export": {
+          "enabled": true
+        }
+      });
+    }
+  });
+}
+
+
 function performanceByGenreChart() {
   showLoading();
   $.ajax({
     url: 'performancebygenre',
     dataType: 'json',
     success: function (data) {
-      console.log(data);
       $('#chart-area').html("");
       dataProvider = [];
       values = {};
-      values["Tipo"] = "Nota CH"
+      values["Tipo"] = "Ciências Humanas"
       $.each(data.content.result, function(index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_CH;
@@ -127,7 +281,8 @@ function performanceByGenreChart() {
         }
       });
       dataProvider.push(values);
-      values["Tipo"] = "Nota CN"
+      values = {};
+      values["Tipo"] = "Ciências da Natureza"
       $.each(data.content.result, function(index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_CN;
@@ -136,7 +291,8 @@ function performanceByGenreChart() {
         }
       });
       dataProvider.push(values);
-      values["Tipo"] = "Nota LC"
+      values = {};
+      values["Tipo"] = "Linguagens e Códigos"
       $.each(data.content.result, function(index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_LC;
@@ -145,7 +301,8 @@ function performanceByGenreChart() {
         }
       });
       dataProvider.push(values);
-      values["Tipo"] = "Nota MT"
+      values = {};
+      values["Tipo"] = "Matemática"
       $.each(data.content.result, function(index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_MT;
@@ -154,7 +311,6 @@ function performanceByGenreChart() {
         }
       });
       dataProvider.push(values);
-      console.log(dataProvider);
       AmCharts.makeChart("chart-area", {
         "type": "radar",
         "theme": "light",
