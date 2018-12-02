@@ -34,7 +34,7 @@ char **get_paths (char *file, int *qtde_paths){
 void run_command (void *file){
 	
 	char comando[2000];
-	char *pypath = "python ../scripts_tratamento/extrai_dados.py ../metadados/todos_att_tipos.txt ../metadados/utilizados_att_tipos.txt ";
+	char *pypath = "python2 ../scripts_tratamento/extrai_dados.py ../metadados/todos_att_tipos.txt ../metadados/utilizados_att_tipos.txt ";
 	sprintf (comando, "%s%s\n", pypath, (char *)file);
 	system(comando);
 	printf (comando, "\n");

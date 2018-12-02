@@ -185,6 +185,68 @@ function performanceByGenreChart() {
   });
 }
 
+function performanceByEstadosChart(){
+  showLoading();
+  $.ajax({
+    url: 'performanceByEstadosChart',
+    dataType: 'json',
+    success: function(data){
+      console.log(data);
+      $('#chart-area').html("");
+      dataProvider=[];
+      values={};
+      values["Tipo"]="Nota CH"
+      $.each(data.content.result,function(index,value){
+          if(value.estado =='AC'){
+            value["Acre"]=value.media_NOTA_CH;
+          }else if(value.estado =='AL'){
+            value["Alagoas"]=value.media_NOTA_CH;
+          }else if(value.estado=='AP'){
+            value["Amapá"]=value.media_NOTA_CH;
+          }else if(value.estado=='AM'){
+            value["Amazonas"]=value.media_NOTA_CH;
+          }else if(value.estado=='BA'){
+            value["Bahia"]=value.media_NOTA_CH;
+          }else if(value.estado='CE'){
+            value["Ceará"]=value.media_NOTA_CH;
+          }else if(value.estado='DF'){
+            value["Distrito Federa"]=value.media_NOTA_CH;
+          }else if(value.estado='ES'){
+            value["Espírito Santo"]=value.media_NOTA_CH;
+          }else if(value.estado='GO'){
+            value["Goiás"]=value.media_NOTA_CH;
+          }else if(value.estado='MA'){
+            value["Maranhão"]=value.media_NOTA_CH;
+          }else if(value.estado='MT'){
+            value["Mato Grosso"]=value.media_NOTA_CH;
+          }else if(value.estado='MS'){
+            value["Mato Grosso do Sul"]=value.media_NOTA_CH;
+          }else if(value.estado='MG'){
+            value["Minas Gerais"]=value.media_NOTA_CH;
+          }else if(value.estado='PA'){
+            value["Pará"]=value.media_NOTA_CH;
+          }else if(value.estado='PB'){
+            value["Paraíba"]=value.media_NOTA_CH;
+          }else if(value.estado='PR'){
+            value["Paraná"]=value.media_NOTA_CH;
+          }else if(value.estado='PE'){
+           value["Pernambuco"]=value.media_NOTA_CH; 
+          }else if(value.estado='PI'){
+            value["Piauí"]=value.media_NOTA_CH;
+          }else if(value.estado='RJ'){
+            value["Rio de Janeiro"]=value.media_NOTA_CH;
+          }else if(value.estado='RN'){
+            value["Rio Grande do Norte"]=value.media_NOTA_CH;
+          }else if(value.estado='RS'){
+            value["Rio Grande do Sul"]=value.media_NOTA_CH;
+          }
+          
+      })
+    }
+  
+  });
+}
+
 $(document).ready(function () {  
   $('#sidebarCollapse').on('click', function () {
       $('#sidebar').toggleClass('active');

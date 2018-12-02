@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('numberbyage', views.dataNumberByAgeView, name='dataNumberByAgeView'),
     path('numberbygenre', views.dataNumberByGenreView, name='dataNumberByGenreView'),
-    path('performancebygenre', views.dataPerformanceByGenreView, name='dataPerformanceByGenreView')
+    path('performancebygenre', views.dataPerformanceByGenreView, name='dataPerformanceByGenreView'),
+    path('performancebyestados',views.dataperformanceByEstadosView, name='dataPerformanceByEstadosChart')
 ]
