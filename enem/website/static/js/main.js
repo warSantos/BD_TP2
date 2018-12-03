@@ -409,8 +409,7 @@ function performanceByEstadosChart(){
           // console.log("No trem ")
         }
       });
-
-      
+      dataProvider.push(values);
       AmCharts.makeChart("chart-area", {
         "type": "radar",
         "theme": "light",
@@ -421,16 +420,16 @@ function performanceByEstadosChart(){
           "minimum": 0
         }],
         "graphs": [ {
-          "balloonText": "Minasgerais: [[value]]",
+          "balloonText": "Minas Gerais: [[value]]",
           "bullet": "round",
           "lineThickness": 2,
-          "valueField": "Minasgerais"
+          "valueField": "Minas_Gerais"
         },
         {
-          "balloonText": "Saopaulo: [[value]]",
+          "balloonText": "Sao Paulo: [[value]]",
           "bullet": "round",
           "lineThickness": 2,
-          "valueField": "Saopaulo"
+          "valueField": "Sao_Paulo"
         }],
         "categoryField": "Tipo",
         "export": {
