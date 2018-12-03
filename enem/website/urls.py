@@ -10,5 +10,6 @@ urlpatterns = [
     path('numberbyinternet', views.dataNumberByInternetView, name='dataNumberByInternetView'),
     path('numberbypresence', views.dataNumberByPresenceView, name='dataNumberByPresenceView'),
     path('performancebygenre', views.dataPerformanceByGenreView, name='dataPerformanceByGenreView'),
-    path('performancebyestados',views.dataperformanceByEstadosView, name='dataPerformanceByEstadosView')
+    path('performancebyestados',views.dataperformanceByEstadosView, name='dataPerformanceByEstadosView'),
+    path('situacaoensinomedio',views.dataSituacaoEnsinoMedioView, name='dataSituacaoEnsinoMedioView')
 ]

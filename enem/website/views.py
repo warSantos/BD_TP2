@@ -137,6 +137,21 @@ def dataperformanceByEstadosView(request):
     }
     return data
 
+@ajax
+def dataSituacaoEnsinoMedioView(request):
+    titles = {
+        '1': "Já concluí",
+        '2': "Estou cursando e concluirei em 2017",
+        '3': "Estou cursando e concluirei após 2017",
+        '4': "Não concluí e não estou cursando"
+    }
+    query_entry = Participant.objects.values("TP_ST_CONCLUSAO").annotate(entries=Count("TP_ST_CONCLUSAO"))
+    data = []
+    for i in query_entry:
+        data.append({"title": titles[i["TP_ST_CONCLUSAO"]], "value": i['entries']})
+
+    # print(data)
+    return data
 
 def index(request):
     data = {
