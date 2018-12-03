@@ -618,6 +618,40 @@ function performanceByEstadosChart(){
   });
 }
 
+function situacaoEnsinoMedio(){
+  showLoading();
+  console.log("Antes da chamada do ajax");
+  $.ajax({
+    url: 'situacaoensinomedio',
+    dataType: 'json',
+    success: function(data){
+      console.log("Definindo o gráfico :D");
+      console.log(data["content"]);
+      AmCharts.makeChart( "chart-area", {
+        "type": "pie",
+        "theme": "none",
+        "dataProvider": data.content,
+        "titleField": "title",
+        "valueField": "value",
+        "labelRadius": 5,
+      
+        "radius": "42%",
+        "innerRadius": "60%",
+        "labelText": "[[title]]",
+        "export": {
+          "enabled": true
+        }
+      } );
+    },
+    error: function(){
+      console.log("Deu ruim man");
+    },
+    complete: function(){
+      console.log("Completou man");
+    }
+  })
+}
+
 $(document).ready(function () {  
   $('#sidebarCollapse').on('click', function () {
       $('#sidebar').toggleClass('active');
