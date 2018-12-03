@@ -110,20 +110,19 @@ def dataPerformanceByGenreView(request):
     }
     return data
 
-
 @ajax
 def dataperformanceByEstadosView(request):
-    query_objects=Participant.objects.values('SG_UF_PROVA').annotate(COUNT=Count('SG_UF_PROVA')).order_by('SG_UF_PROVA')
-    query_objects_NU_NOTA = Participant.objects.values('SG_UF_PROVA').annotate(
-        SUM_NU_NOTA_CN=Sum('NU_NOTA_CN'),
-        SUM_NU_NOTA_CH=Sum('NU_NOTA_CH'),
-        SUM_NU_NOTA_LC=Sum('NU_NOTA_LC'),
-        SUM_NU_NOTA_MT=Sum('NU_NOTA_MT')
-
+    query_objects = {}
+    query_objects['SG_UF_PROVA'] = Participant.objects.values('SG_UF_PROVA').annotate(COUNT = Count('SG_UF_PROVA')).order_by('SG_UF_PROVA')
+    query_objects['NU_NOTA'] = Participant.objects.values('SG_UF_PROVA').annotate(
+        SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
+        SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
+        SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
+        SUM_NU_NOTA_MT = Sum('NU_NOTA_MT')
     ).order_by('SG_UF_PROVA')
     participants = []
-    for obj in query_objects:
-        for obj_sum in query_objects_NU_NOTA:
+    for obj in query_objects['SG_UF_PROVA']:
+        for obj_sum in query_objects['NU_NOTA']:
             if (obj['SG_UF_PROVA'] == obj_sum['SG_UF_PROVA']):
                 participants.append({
                     "estado": obj['SG_UF_PROVA'],

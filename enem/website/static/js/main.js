@@ -269,6 +269,7 @@ function performanceByGenreChart() {
     url: 'performancebygenre',
     dataType: 'json',
     success: function (data) {
+      console.log(data);
       $('#chart-area').html("");
       dataProvider = [];
       values = {};
@@ -351,243 +352,65 @@ function performanceByEstadosChart(){
       $('#chart-area').html("");
       dataProvider=[];
       values={};
-      values["Tipo"]="Nota CH"
-      $.each(data.content.result,function(index,value){
-        if(value.estado =='AC'){
-          value["Acre"]=value.media_NOTA_CH;
-        }else if(value.estado =='AL'){
-          value["Alagoas"]=value.media_NOTA_CH;
-        }else if(value.estado=='AP'){
-          value["Amapá"]=value.media_NOTA_CH;
-        }else if(value.estado=='AM'){
-          value["Amazonas"]=value.media_NOTA_CH;
-        }else if(value.estado=='BA'){
-          value["Bahia"]=value.media_NOTA_CH;
-        }else if(value.estado='CE'){
-          value["Ceará"]=value.media_NOTA_CH;
-        }else if(value.estado='DF'){
-          value["Distrito Federa"]=value.media_NOTA_CH;
-        }else if(value.estado='ES'){
-          value["Espírito Santo"]=value.media_NOTA_CH;
-        }else if(value.estado='GO'){
-          value["Goiás"]=value.media_NOTA_CH;
-        }else if(value.estado='MA'){
-          value["Maranhão"]=value.media_NOTA_CH;
-        }else if(value.estado='MT'){
-          value["Mato Grosso"]=value.media_NOTA_CH;
-        }else if(value.estado='MS'){
-          value["Mato Grosso do Sul"]=value.media_NOTA_CH;
-        }else if(value.estado='MG'){
-          value["MinasGerais"]=value.media_NOTA_CH;
-        }else if(value.estado='PA'){
-          value["Pará"]=value.media_NOTA_CH;
-        }else if(value.estado='PB'){
-          value["Paraíba"]=value.media_NOTA_CH;
-        }else if(value.estado='PR'){
-          value["Paraná"]=value.media_NOTA_CH;
-        }else if(value.estado='PE'){
-          value["Pernambuco"]=value.media_NOTA_CH; 
-        }else if(value.estado='PI'){
-          value["Piauí"]=value.media_NOTA_CH;
-        }else if(value.estado='RJ'){
-          value["Rio de Janeiro"]=value.media_NOTA_CH;
-        }else if(value.estado='RN'){
-          value["Rio Grande do Norte"]=value.media_NOTA_CH;
-        }else if(value.estado='RS'){
-          value["Rio Grande do Sul"]=value.media_NOTA_CH;
-        }else if(value.estado='RO'){
-          value["Rondônia"]=value.media_NOTA_CH;
-        }else if(value.estado='RR'){
-          value["Roraima"]=value.media_NOTA_CH;
-        }else if(value.estado='SC'){
-          value['Santa Catarina']=value.media_NOTA_CH;
-        }else if(value.estado='SP'){
-          value["SaoPaulo"]=value.media_NOTA_CH;
-        }else if(value.estado='SE'){
-          value["Sergipe"]=value.media_NOTA_CH;
-        }else if(value.estado='TO'){
-          value["Tocantins"]=value.media_NOTA_CH;
-        } 
+      values["Tipo"]="Ciências Humanas"
+      // console.log(data.content.result);
+      $.each(data.content.result, function(index, value){
+        console.log(value.estado);
+        if(value.estado=="MG"){
+          values["Minas_Gerais"] = value.media_NOTA_CH;
+          console.log("Tem a nota ",values);
+        }else if(value.estado=="SP"){
+          values["Sao_Paulo"] = value.media_NOTA_CH;
+          console.log("Tem a nota ",values);
+        }else{
+          // console.log("No trem ")
+        }
       });
       dataProvider.push(values);
-      values["Tipo"]="Nota CN"
-      $.each(data.content.result,function(index,value){
-        if(value.estado =='AC'){
-          value["Acre"]=value.media_NOTA_CN;
-        }else if(value.estado =='AL'){
-          value["Alagoas"]=value.media_NOTA_CN;
-        }else if(value.estado=='AP'){
-          value["Amapá"]=value.media_NOTA_CN;
-        }else if(value.estado=='AM'){
-          value["Amazonas"]=value.media_NOTA_CN;
-        }else if(value.estado=='BA'){
-          value["Bahia"]=value.media_NOTA_CN;
-        }else if(value.estado='CE'){
-          value["Ceará"]=value.media_NOTA_CN;
-        }else if(value.estado='DF'){
-          value["Distrito Federa"]=value.media_NOTA_CN;
-        }else if(value.estado='ES'){
-          value["Espírito Santo"]=value.media_NOTA_CN;
-        }else if(value.estado='GO'){
-          value["Goiás"]=value.media_NOTA_CN;
-        }else if(value.estado='MA'){
-          value["Maranhão"]=value.media_NOTA_CN;
-        }else if(value.estado='MT'){
-          value["Mato Grosso"]=value.media_NOTA_CN;
-        }else if(value.estado='MS'){
-          value["Mato Grosso do Sul"]=value.media_NOTA_CN;
-        }else if(value.estado='MG'){
-          value["MinasGerais"]=value.media_NOTA_CN;
-        }else if(value.estado='PA'){
-          value["Pará"]=value.media_NOTA_CN;
-        }else if(value.estado='PB'){
-          value["Paraíba"]=value.media_NOTA_CN;
-        }else if(value.estado='PR'){
-          value["Paraná"]=value.media_NOTA_CN;
-        }else if(value.estado='PE'){
-          value["Pernambuco"]=value.media_NOTA_CN; 
-        }else if(value.estado='PI'){
-          value["Piauí"]=value.media_NOTA_CN;
-        }else if(value.estado='RJ'){
-          value["Rio de Janeiro"]=value.media_NOTA_CN;
-        }else if(value.estado='RN'){
-          value["Rio Grande do Norte"]=value.media_NOTA_CN;
-        }else if(value.estado='RS'){
-          value["Rio Grande do Sul"]=value.media_NOTA_CN;
-        }else if(value.estado='RO'){
-          value["Rondônia"]=value.media_NOTA_CN;
-        }else if(value.estado='RR'){
-          value["Roraima"]=value.media_NOTA_CN;
-        }else if(value.estado='SC'){
-          value['Santa Catarina']=value.media_NOTA_CN;
-        }else if(value.estado='SP'){
-          value["SaoPaulo"]=value.media_NOTA_CN;
-        }else if(value.estado='SE'){
-          value["Sergipe"]=value.media_NOTA_CN;
-        }else if(value.estado='TO'){
-          value["Tocantins"]=value.media_NOTA_CN;
-        } 
+      values = {};
+      values["Tipo"] = "Ciências da Natureza"
+      // console.log(dataProvider);
+      $.each(data.content.result, function(index, value) {
+        if(value.estado=="MG"){
+          values["Minas_Gerais"] = value.media_NOTA_CN;
+          console.log("Tem a nota ",values);
+        }else if(value.estado=="SP"){
+          values["Sao_Paulo"] = value.media_NOTA_CN;
+          console.log("Tem a nota ",values);
+        }else{
+          // console.log("No trem ")
+        }
       });
       dataProvider.push(values);
-      values["Tipo"] = "Nota LC"
-      $.each(data.content.result,function(index,value){
-        if(value.estado =='AC'){
-          value["Acre"]=value.media_NOTA_LC;
-        }else if(value.estado =='AL'){
-          value["Alagoas"]=value.media_NOTA_LC;
-        }else if(value.estado=='AP'){
-          value["Amapá"]=value.media_NOTA_LC;
-        }else if(value.estado=='AM'){
-          value["Amazonas"]=value.media_NOTA_LC;
-        }else if(value.estado=='BA'){
-          value["Bahia"]=value.media_NOTA_LC;
-        }else if(value.estado='CE'){
-          value["Ceará"]=value.media_NOTA_LC;
-        }else if(value.estado='DF'){
-          value["Distrito Federa"]=value.media_NOTA_LC;
-        }else if(value.estado='ES'){
-          value["Espírito Santo"]=value.media_NOTA_LC;
-        }else if(value.estado='GO'){
-          value["Goiás"]=value.media_NOTA_LC;
-        }else if(value.estado='MA'){
-          value["Maranhão"]=value.media_NOTA_LC;
-        }else if(value.estado='MT'){
-          value["Mato Grosso"]=value.media_NOTA_LC;
-        }else if(value.estado='MS'){
-          value["Mato Grosso do Sul"]=value.media_NOTA_LC;
-        }else if(value.estado='MG'){
-          value["MinasGerais"]=value.media_NOTA_LC;
-        }else if(value.estado='PA'){
-          value["Pará"]=value.media_NOTA_LC;
-        }else if(value.estado='PB'){
-          value["Paraíba"]=value.media_NOTA_LC;
-        }else if(value.estado='PR'){
-          value["Paraná"]=value.media_NOTA_LC;
-        }else if(value.estado='PE'){
-          value["Pernambuco"]=value.media_NOTA_LC; 
-        }else if(value.estado='PI'){
-          value["Piauí"]=value.media_NOTA_LC;
-        }else if(value.estado='RJ'){
-          value["Rio de Janeiro"]=value.media_NOTA_LC;
-        }else if(value.estado='RN'){
-          value["Rio Grande do Norte"]=value.media_NOTA_LC;
-        }else if(value.estado='RS'){
-          value["Rio Grande do Sul"]=value.media_NOTA_LC;
-        }else if(value.estado='RO'){
-          value["Rondônia"]=value.media_NOTA_LC;
-        }else if(value.estado='RR'){
-          value["Roraima"]=value.media_NOTA_LC;
-        }else if(value.estado='SC'){
-          value['Santa Catarina']=value.media_NOTA_LC;
-        }else if(value.estado='SP'){
-          value["SaoPaulo"]=value.media_NOTA_LC;
-        }else if(value.estado='SE'){
-          value["Sergipe"]=value.media_NOTA_LC;
-        }else if(value.estado='TO'){
-          value["Tocantins"]=value.media_NOTA_LC;
-        } 
+      values = {};
+      values["Tipo"] = "Linguagens e Códigos"
+      $.each(data.content.result, function(index, value) {
+        if(value.estado=="MG"){
+          values["Minas_Gerais"] = value.media_NOTA_LC;
+          console.log("Tem a nota ",values);
+        }else if(value.estado=="SP"){
+          values["Sao_Paulo"] = value.media_NOTA_LC;
+          console.log("Tem a nota ",values);
+        }else{
+          // console.log("No trem ")
+        }
       });
       dataProvider.push(values);
-      values["Tipo"] = "Nota MT"
-      $.each(data.content.result,function(index,value){
-        if(value.estado =='AC'){
-          value["Acre"]=value.media_NOTA_MT;
-        }else if(value.estado =='AL'){
-          value["Alagoas"]=value.media_NOTA_MT;
-        }else if(value.estado=='AP'){
-          value["Amapá"]=value.media_NOTA_MT;
-        }else if(value.estado=='AM'){
-          value["Amazonas"]=value.media_NOTA_MT;
-        }else if(value.estado=='BA'){
-          value["Bahia"]=value.media_NOTA_MT;
-        }else if(value.estado='CE'){
-          value["Ceará"]=value.media_NOTA_MT;
-        }else if(value.estado='DF'){
-          value["Distrito Federa"]=value.media_NOTA_MT;
-        }else if(value.estado='ES'){
-          value["Espírito Santo"]=value.media_NOTA_MT;
-        }else if(value.estado='GO'){
-          value["Goiás"]=value.media_NOTA_MT;
-        }else if(value.estado='MA'){
-          value["Maranhão"]=value.media_NOTA_MT;
-        }else if(value.estado='MT'){
-          value["Mato Grosso"]=value.media_NOTA_MT;
-        }else if(value.estado='MS'){
-          value["Mato Grosso do Sul"]=value.media_NOTA_MT;
-        }else if(value.estado='MG'){
-          value["MinasGerais"]=value.media_NOTA_MT;
-        }else if(value.estado='PA'){
-          value["Pará"]=value.media_NOTA_MT;
-        }else if(value.estado='PB'){
-          value["Paraíba"]=value.media_NOTA_MT;
-        }else if(value.estado='PR'){
-          value["Paraná"]=value.media_NOTA_MT;
-        }else if(value.estado='PE'){
-          value["Pernambuco"]=value.media_NOTA_MT; 
-        }else if(value.estado='PI'){
-          value["Piauí"]=value.media_NOTA_MT;
-        }else if(value.estado='RJ'){
-          value["Rio de Janeiro"]=value.media_NOTA_MT;
-        }else if(value.estado='RN'){
-          value["Rio Grande do Norte"]=value.media_NOTA_MT;
-        }else if(value.estado='RS'){
-          value["Rio Grande do Sul"]=value.media_NOTA_MT;
-        }else if(value.estado='RO'){
-          value["Rondônia"]=value.media_NOTA_MT;
-        }else if(value.estado='RR'){
-          value["Roraima"]=value.media_NOTA_MT;
-        }else if(value.estado='SC'){
-          value['Santa Catarina']=value.media_NOTA_MT;
-        }else if(value.estado='SP'){
-          value["SaoPaulo"]=value.media_NOTA_MT;
-        }else if(value.estado='SE'){
-          value["Sergipe"]=value.media_NOTA_MT;
-        }else if(value.estado='TO'){
-          value["Tocantins"]=value.media_NOTA_MT;
-        } 
+      values = {};
+      values["Tipo"] = "Matemática"
+      $.each(data.content.result, function(index, value) {
+        if(value.estado=="MG"){
+          values["Minas_Gerais"] = value.media_NOTA_MT;
+          console.log("Tem a nota ",values);
+        }else if(value.estado=="SP"){
+          values["Sao_Paulo"] = value.media_NOTA_MT;
+          console.log("Tem a nota ",values);
+        }else{
+          // console.log("No trem ")
+        }
       });
-      dataProvider.push(values);
-      console.log(dataProvider);
+
+      
       AmCharts.makeChart("chart-area", {
         "type": "radar",
         "theme": "light",
@@ -598,16 +421,16 @@ function performanceByEstadosChart(){
           "minimum": 0
         }],
         "graphs": [ {
-          "balloonText": "MinasGerais: [[value]]",
+          "balloonText": "Minasgerais: [[value]]",
           "bullet": "round",
           "lineThickness": 2,
-          "valueField": "MinasGerais"
+          "valueField": "Minasgerais"
         },
         {
-          "balloonText": "SãoPaulo: [[value]]",
+          "balloonText": "Saopaulo: [[value]]",
           "bullet": "round",
           "lineThickness": 2,
-          "valueField": "SaoPaulo"
+          "valueField": "Saopaulo"
         }],
         "categoryField": "Tipo",
         "export": {
