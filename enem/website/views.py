@@ -124,12 +124,10 @@ def dataperformanceByEstadosView(request):
     for obj in query_objects['SG_UF_PROVA']:
         for obj_sum in query_objects['NU_NOTA']:
             if (obj['SG_UF_PROVA'] == obj_sum['SG_UF_PROVA']):
+                media = ((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4
                 participants.append({
                     "estado": obj['SG_UF_PROVA'],
-                    "media_NOTA_CN": obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT'],
-                    "media_NOTA_CH": obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT'],
-                    "media_NOTA_LC": obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT'],
-                    "media_NOTA_MT": obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']
+                    "media": media
                 })
                 break
     data = {

@@ -350,92 +350,58 @@ function performanceByEstadosChart(){
     success: function(data){
       console.log(data);
       $('#chart-area').html("");
-      dataProvider=[];
-      values={};
-      values["Tipo"]="Ciências Humanas"
+      // dataProvider=[];
+      // values={};
+      // values["Tipo"]="Ciências Humanas"
       // console.log(data.content.result);
-      $.each(data.content.result, function(index, value){
-        console.log(value.estado);
-        if(value.estado=="MG"){
-          values["Minas_Gerais"] = value.media_NOTA_CH;
-          console.log("Tem a nota ",values);
-        }else if(value.estado=="SP"){
-          values["Sao_Paulo"] = value.media_NOTA_CH;
-          console.log("Tem a nota ",values);
-        }else{
-          // console.log("No trem ")
-        }
-      });
-      dataProvider.push(values);
-      values = {};
-      values["Tipo"] = "Ciências da Natureza"
-      // console.log(dataProvider);
-      $.each(data.content.result, function(index, value) {
-        if(value.estado=="MG"){
-          values["Minas_Gerais"] = value.media_NOTA_CN;
-          console.log("Tem a nota ",values);
-        }else if(value.estado=="SP"){
-          values["Sao_Paulo"] = value.media_NOTA_CN;
-          console.log("Tem a nota ",values);
-        }else{
-          // console.log("No trem ")
-        }
-      });
-      dataProvider.push(values);
-      values = {};
-      values["Tipo"] = "Linguagens e Códigos"
-      $.each(data.content.result, function(index, value) {
-        if(value.estado=="MG"){
-          values["Minas_Gerais"] = value.media_NOTA_LC;
-          console.log("Tem a nota ",values);
-        }else if(value.estado=="SP"){
-          values["Sao_Paulo"] = value.media_NOTA_LC;
-          console.log("Tem a nota ",values);
-        }else{
-          // console.log("No trem ")
-        }
-      });
-      dataProvider.push(values);
-      values = {};
-      values["Tipo"] = "Matemática"
-      $.each(data.content.result, function(index, value) {
-        if(value.estado=="MG"){
-          values["Minas_Gerais"] = value.media_NOTA_MT;
-          console.log("Tem a nota ",values);
-        }else if(value.estado=="SP"){
-          values["Sao_Paulo"] = value.media_NOTA_MT;
-          console.log("Tem a nota ",values);
-        }else{
-          // console.log("No trem ")
-        }
-      });
-      dataProvider.push(values);
-      AmCharts.makeChart("chart-area", {
-        "type": "radar",
-        "theme": "light",
-        "dataProvider": dataProvider,
-        "startDuration": 1,
+      // $.each(data.content.result, function(index, value){
+        
+      //   if(value.estado=="MG"){
+      //     values["Minas_Gerais"] = value.media_NOTA_CH;
+      //     // console.log("Tem a nota ",values);
+      //   }else if(value.estado=="SP"){
+      //     values["Sao_Paulo"] = value.media_NOTA_CH;
+      //     // console.log("Tem a nota ",values);
+      //   }else{
+      //     // console.log("No trem ")
+      //   }
+      // });
+      
+      var chart = AmCharts.makeChart("chart-area", {
+        "theme": "none",
+        "type": "serial",
+      "startDuration": 2,
+        "dataProvider":data.content.result,
         "valueAxes": [{
-          "maximum": 1000,
-          "minimum": 0
+            "position": "left",
+            "title": "Nota"
         }],
-        "graphs": [ {
-          "balloonText": "Minas Gerais: [[value]]",
-          "bullet": "round",
-          "lineThickness": 2,
-          "valueField": "Minas_Gerais"
+        "graphs": [{
+            "balloonText": "[[category]]: <b>[[value]]</b>",
+            "fillColorsField": "color",
+            "fillAlphas": 1,
+            "lineAlpha": 0.1,
+            "type": "column",
+            "valueField": "media"
+        }],
+        "depth3D": 10,
+      "angle": 30,
+        "chartCursor": {
+            "categoryBalloonEnabled": true,
+            "cursorAlpha": 0,
+            "zoomable": false
         },
-        {
-          "balloonText": "Sao Paulo: [[value]]",
-          "bullet": "round",
-          "lineThickness": 2,
-          "valueField": "Sao_Paulo"
-        }],
-        "categoryField": "Tipo",
+        "categoryField": "estado",
+        "categoryAxis": {
+            "gridPosition": "start",
+            "labelRotation": 90
+        },
         "export": {
           "enabled": true
-        }
-      });
+         }
+    
+    });
+    
     }
   });
 }
