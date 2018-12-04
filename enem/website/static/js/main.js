@@ -1,8 +1,9 @@
 function showLoading() {
-  $("#chart-content").hide("slow", function() {
-    $('#chart-area').html("<img src='/static/img/loading.gif' class='loading-img' alt=''></img>");
+  // $("#chart-content").hide("slow", function() {
+    // $('#chart-area').html("<img src='/static/img/loading.gif' class='loading-img' alt=''></img>");
+    $('#loading-img').show();
     $('#chart-content').show("slow");
-  });
+  // });
 }
 
 function numberByGenreChart() {
@@ -11,7 +12,7 @@ function numberByGenreChart() {
     url: 'numberbygenre',
     dataType: 'json',
     success: function (data) {
-      $('#chart-area').html("");
+      $('#loading-img').hide();
       dataProvider = [];
       max = 0;
       $.each(data.content.result, function(index, value) {        
@@ -85,7 +86,7 @@ function numberByAgeChart() {
     url: 'numberbyage',
     dataType: 'json',
     success: function (data) {
-      $('#chart-area').html("");
+      $('#loading-img').hide();
       AmCharts.makeChart("chart-area", {
         "type": "pie",
         "theme": "light",
@@ -114,7 +115,7 @@ function numberByLanguageChart() {
     url: 'numberbylanguage',
     dataType: 'json',
     success: function (data) {
-      $('#chart-area').html("");
+      $('#loading-img').hide();
       dataProvider = [];
       $.each(data.content.result, function(index, value) {        
         switch(value.TP_LINGUA) {
@@ -161,7 +162,7 @@ function numberByInternetChart() {
     url: 'numberbyinternet',
     dataType: 'json',
     success: function (data) {
-      $('#chart-area').html("");
+      $('#loading-img').hide();
       dataProvider = [];
       $.each(data.content.result, function(index, value) {        
         switch(value.Q025) {
@@ -210,7 +211,7 @@ function numberByPresenceChart() {
     dataType: 'json',
     success: function (data) {
       console.log(data.content.result);
-      $('#chart-area').html("");
+      $('#loading-img').hide();
       AmCharts.makeChart("chart-area", {
         "theme": "light",
         "type": "serial",
@@ -270,7 +271,7 @@ function performanceByGenreChart() {
     dataType: 'json',
     success: function (data) {
       console.log(data);
-      $('#chart-area').html("");
+      $('#loading-img').hide();
       dataProvider = [];
       values = {};
       values["Tipo"] = "Ciências Humanas"
@@ -348,29 +349,11 @@ function performanceByEstadosChart(){
     url: 'performancebyestados',
     dataType: 'json',
     success: function(data){
-      console.log(data);
-      $('#chart-area').html("");
-      // dataProvider=[];
-      // values={};
-      // values["Tipo"]="Ciências Humanas"
-      // console.log(data.content.result);
-      // $.each(data.content.result, function(index, value){
-        
-      //   if(value.estado=="MG"){
-      //     values["Minas_Gerais"] = value.media_NOTA_CH;
-      //     // console.log("Tem a nota ",values);
-      //   }else if(value.estado=="SP"){
-      //     values["Sao_Paulo"] = value.media_NOTA_CH;
-      //     // console.log("Tem a nota ",values);
-      //   }else{
-      //     // console.log("No trem ")
-      //   }
-      // });
-      
+      $('#loading-img').hide();
       var chart = AmCharts.makeChart("chart-area", {
         "theme": "none",
         "type": "serial",
-      "startDuration": 2,
+        "startDuration": 2,
         "dataProvider":data.content.result,
         "valueAxes": [{
             "position": "left",
@@ -413,6 +396,7 @@ function situacaoEnsinoMedio(){
     url: 'situacaoensinomedio',
     dataType: 'json',
     success: function(data){
+      $('#loading-img').hide();
       console.log("Definindo o gráfico :D");
       console.log(data["content"]);
       AmCharts.makeChart( "chart-area", {
@@ -426,6 +410,11 @@ function situacaoEnsinoMedio(){
         "radius": "42%",
         "innerRadius": "60%",
         "labelText": "[[title]]",
+        "legend":{
+          "position":"right",
+          "marginRight":100,
+          "autoMargins":false
+        },
         "export": {
           "enabled": true
         }
