@@ -439,8 +439,11 @@ $('#situacaoEnsinoMedio').click(function() {
   showLoading($(this).html());
   console.log("Antes da chamada do ajax");
   $.ajax({
+    type:"POST",
     url: 'situacaoensinomedio',
     dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+
     success: function(data){
       showChart();
       console.log("Definindo o gráfico :D");

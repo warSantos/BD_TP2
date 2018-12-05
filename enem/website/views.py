@@ -186,6 +186,7 @@ def dataperformanceByEstadosView(request):
     return data
 
 @ajax
+@csrf_exempt
 def dataSituacaoEnsinoMedioView(request):
     titles = {
         '1': "Já concluí",
@@ -193,13 +194,22 @@ def dataSituacaoEnsinoMedioView(request):
         '3': "Estou cursando e concluirei após 2017",
         '4': "Não concluí e não estou cursando"
     }
-    query_entry = Participant.objects.values("TP_ST_CONCLUSAO").annotate(entries=Count("TP_ST_CONCLUSAO"))
-    data = []
-    for i in query_entry:
-        data.append({"title": titles[i["TP_ST_CONCLUSAO"]], "value": i['entries']})
+    if(request.method== 'POST'):
+        place= request.POST.get('place')
+        if(place != "BR"):
+            query_entry = Participant.objects.filter(SG_UF_PROVA=place).values("TP_ST_CONCLUSAO").annotate(entries=Count("TP_ST_CONCLUSAO"))
+            data = []
+            for i in query_entry:
+                data.append({"title": titles[i["TP_ST_CONCLUSAO"]], "value": i['entries']})
 
-    # print(data)
-    return data
+        else:            
+            query_entry = Participant.objects.values("TP_ST_CONCLUSAO").annotate(entries=Count("TP_ST_CONCLUSAO"))
+            data = []
+            for i in query_entry:
+                data.append({"title": titles[i["TP_ST_CONCLUSAO"]], "value": i['entries']})
+
+        # print(data)
+        return data
 
 def index(request):
     data = {
