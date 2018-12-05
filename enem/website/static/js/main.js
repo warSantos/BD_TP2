@@ -201,8 +201,11 @@ $('#numberByLanguageChart').click(function() {
 $('#numberByInternetChart').click(function() {
   showLoading($(this).html());
   $.ajax({
+    type: "POST",
     url: 'numberbyinternet',
     dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+    
     success: function (data) {
       showChart();
       dataProvider = [];

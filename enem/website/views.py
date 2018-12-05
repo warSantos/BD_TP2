@@ -64,12 +64,18 @@ def dataNumberByLanguageView(request):
         return data
 
 @ajax
+@csrf_exempt
 def dataNumberByInternetView(request):
-    query_objects = Participant.objects.values('Q025').annotate(COUNT = Count('Q025'))
-    data = {
-      'result': query_objects
-    }
-    return data
+    if (request.method == 'POST'):
+        place = request.POST.get('place')
+        if(place != "BR"):
+            query_objects = Participant.objects.filter(SG_UF_PROVA=place).values('Q025').annotate(COUNT = Count('Q025'))
+        else:
+            query_objects = Participant.objects.values('Q025').annotate(COUNT = Count('Q025'))
+        data = {
+        'result': query_objects
+        }
+        return data
 
 @ajax
 def dataNumberByPresenceView(request):
