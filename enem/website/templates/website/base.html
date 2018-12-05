@@ -46,19 +46,19 @@
                         <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Número</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu1">
                             <li>
-                                <a href="#" onclick="numberByAgeChart();">Idade</a>
+                                <a href="#" id="numberByAgeChart">Idade</a>
                             </li>
                             <li>
-                                <a href="#" onclick="numberByGenreChart();">Gênero</a>
+                                <a href="#" id="numberByGenreChart">Gênero</a>
                             </li>
                             <li>
-                                <a href="#" onclick="numberByLanguageChart();">Línguas Estrangeiras</a>
+                                <a href="#" id="numberByLanguageChart">Línguas Estrangeiras</a>
                             </li>
                             <li>
-                                <a href="#" onclick="numberByInternetChart();">Acesso à Internet</a>
+                                <a href="#" id="numberByInternetChart">Acesso à Internet</a>
                             </li>
                             <li>
-                                <a href="#" onclick="numberByPresenceChart();">Compareceram ao exame</a>
+                                <a href="#" id="numberByPresenceChart">Compareceram ao exame</a>
                             </li>
                         </ul>
                     </li>
@@ -66,13 +66,13 @@
                         <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Desempenho</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu2">
                             <li>
-                                <a href="#" onclick="performanceByGenreChart();">Gênero</a>
+                                <a href="#" id="performanceByGenreChart">Gênero</a>
                             </li>
                             <li>
-                                <a href="#" onclick="performanceByEstadosChart();">Estados</a>
+                                <a href="#" id="performanceByEstadosChart">Estados</a>
                             </li>
                             <li>
-                                <a href="#" onclick="situacaoEnsinoMedio();">Situação do Ensino Médio</a>
+                                <a href="#" id="situacaoEnsinoMedio">Situação do Ensino Médio</a>
                             </li>
                         </ul>
                     </li>
@@ -87,6 +87,7 @@
                             <div class="device-container">
                                 <img src="{% static 'img/enem-logo.png' %}" class="img-fluid" alt="">                                
                             </div>
+                            <h1 class="chart-title"></h1>
                             {% block content %}
                             {% endblock %}
                         </div>

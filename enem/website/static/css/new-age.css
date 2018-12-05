@@ -158,9 +158,12 @@ header.masthead {
   height: 100vh;
   min-height: 775px;
   color: white;
-  background: url("../img/bg-pattern.png"), #FFF176;
+  /* background: url("../img/bg-pattern.png"), #FFF176;
   background: url("../img/bg-pattern.png"), -webkit-gradient(linear, right top, left top, from(#FFF176), to(#FDD835));
-  background: url("../img/bg-pattern.png"), linear-gradient(to bottom, #FFF176,#FDD835);
+  background: url("../img/bg-pattern.png"), linear-gradient(to bottom, #FFF176,#FDD835); */
+  background: url("../img/bg-pattern.png"), #96a2ad;
+  background: url("../img/bg-pattern.png"), -webkit-gradient(linear, right top, left top, from(#96a2ad), to(#d3dbe4));
+  background: url("../img/bg-pattern.png"), linear-gradient(to bottom, #96a2ad,#d3dbe4);
 }
 
 header.masthead .header-content {
