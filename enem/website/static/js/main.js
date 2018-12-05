@@ -310,8 +310,11 @@ $('#numberByPresenceChart').click(function() {
 $('#performanceByGenreChart').click(function() {
   showLoading($(this).html());
   $.ajax({
+    type:"POST",
     url: 'performancebygenre',
     dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+    
     success: function (data) {
       console.log(data);
       showChart();
