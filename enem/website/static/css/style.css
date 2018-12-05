@@ -32,18 +32,22 @@
     font-family: Montserrat;
 }
 
-.amcharts-chart-div {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-#sidebarCollapse {
+.topButton {
     font-size: 2vw;
     padding: 1vw;
     position: absolute;
     color: #006CB7;
     cursor: pointer;
     z-index: 99;
+}
+
+#confButton {
+    right: 0;
+}
+
+.amcharts-chart-div {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .loading-img {

@@ -4,37 +4,50 @@ from django.shortcuts import render
 from django_ajax.decorators import ajax
 
 from enem.models import Participant
+from django.views.decorators.csrf import csrf_exempt
 
 @ajax
+@csrf_exempt
 def dataNumberByGenreView(request):
-    query_objects = Participant.objects.values('TP_SEXO').annotate(COUNT = Count('TP_SEXO')).order_by('TP_SEXO')
-    data = {
-      'result': query_objects
-    }
-    return data
+    if (request.method == 'POST'):
+        place = request.POST.get('place')
+        if (place != "BR"):
+            query_objects = Participant.objects.filter(SG_UF_PROVA=place).values('TP_SEXO').annotate(COUNT = Count('TP_SEXO')).order_by('TP_SEXO')
+        else:
+            query_objects = Participant.objects.values('TP_SEXO').annotate(COUNT = Count('TP_SEXO')).order_by('TP_SEXO')
+        data = {
+        'result': query_objects
+        }
+        return data
 
 @ajax
+@csrf_exempt
 def dataNumberByAgeView(request):
-    query_objects = Participant.objects.values('NU_IDADE').annotate(COUNT = Count('NU_IDADE')).order_by('NU_IDADE')
-    participants = []
-    participants.append({"age": "0-9", "count": 0})
-    participants.append({"age": "10-19", "count": 0})
-    participants.append({"age": "20-29", "count": 0})
-    participants.append({"age": "30-39", "count": 0})
-    participants.append({"age": "40-49", "count": 0})
-    participants.append({"age": "50-59", "count": 0})
-    participants.append({"age": "60-69", "count": 0})
-    participants.append({"age": "70-79", "count": 0})
-    participants.append({"age": "80-89", "count": 0})
-    participants.append({"age": "90-99", "count": 0})
-    participants.append({"age": "100+", "count": 0})
-    for obj in query_objects:
-        if(obj["COUNT"] > 0):
-            participants[divmod(int(obj['NU_IDADE']), 10)[0]]["count"] += obj["COUNT"]
-    data = {
-      'result': participants
-    }
-    return data
+    if (request.method == 'POST'):
+        place = request.POST.get('place')
+        if (place != "BR"):
+            query_objects = Participant.objects.filter(SG_UF_PROVA=place).values('NU_IDADE').annotate(COUNT = Count('NU_IDADE')).order_by('NU_IDADE')
+        else:
+            query_objects = Participant.objects.values('NU_IDADE').annotate(COUNT = Count('NU_IDADE')).order_by('NU_IDADE')
+        participants = []
+        participants.append({"age": "0-9", "count": 0})
+        participants.append({"age": "10-19", "count": 0})
+        participants.append({"age": "20-29", "count": 0})
+        participants.append({"age": "30-39", "count": 0})
+        participants.append({"age": "40-49", "count": 0})
+        participants.append({"age": "50-59", "count": 0})
+        participants.append({"age": "60-69", "count": 0})
+        participants.append({"age": "70-79", "count": 0})
+        participants.append({"age": "80-89", "count": 0})
+        participants.append({"age": "90-99", "count": 0})
+        participants.append({"age": "100+", "count": 0})
+        for obj in query_objects:
+            if(obj["COUNT"] > 0):
+                participants[divmod(int(obj['NU_IDADE']), 10)[0]]["count"] += obj["COUNT"]
+        data = {
+        'result': participants
+        }
+        return data
 
 @ajax
 def dataNumberByLanguageView(request):

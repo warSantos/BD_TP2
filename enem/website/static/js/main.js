@@ -11,11 +11,44 @@ function showChart() {
   $('#chart-area').show();
 }
 
+$('#confButton').click(function() {
+  $('#chart-content').show("slow");
+  showChart();
+  var map = AmCharts.makeChart( "chart-area", {
+    "type": "map",
+    "theme": "light",
+    "panEventsEnabled": true,
+    "dataProvider": {
+      "map": "brazilLow",
+      "getAreasFromMap": true
+    },
+    "areasSettings": {
+      "autoZoom": false,
+      "color": "#CDCDCD",
+      "colorSolid": "#5EB7DE",
+      "selectedColor": "#5EB7DE",
+      "outlineColor": "#666666",
+      "rollOverColor": "#88CAE7",
+      "rollOverOutlineColor": "#FFFFFF",
+      "selectable": true
+    },
+    "listeners": [ {
+      "event": "clickMapObject",
+      "method": function( event ) {
+        Cookies.set('place', event.mapObject.id.substring(3, 6));
+        $("#place").html(Cookies.get('place'));
+      }
+    }]
+  } );
+});
+
 $('#numberByGenreChart').click(function() {    
   showLoading($(this).html());
   $.ajax({
+    type: "POST",
     url: 'numberbygenre',
     dataType: 'json',
+    data: { place: Cookies.get('place') },
     success: function (data) {
       showChart();
       dataProvider = [];
@@ -85,11 +118,13 @@ $('#numberByGenreChart').click(function() {
   });
 });
 
-$('#numberByAgeChart').click(function() {    
+$('#numberByAgeChart').click(function() {
   showLoading($(this).html());
   $.ajax({
+    type: "POST",
     url: 'numberbyage',
     dataType: 'json',
+    data: { 'place': Cookies.get('place') },
     success: function (data) {
       showChart();
       AmCharts.makeChart("chart-area", {
@@ -433,6 +468,10 @@ $('#situacaoEnsinoMedio').click(function() {
 });
 
 $(document).ready(function () {  
+  if (Cookies.get('place') == undefined) {
+    Cookies.set('place', 'BR');
+  }
+  $("#place").html(Cookies.get('place'));
   $('#sidebarCollapse').on('click', function () {
       $('#sidebar').toggleClass('active');
   });
