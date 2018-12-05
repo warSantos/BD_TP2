@@ -152,8 +152,10 @@ $('#numberByAgeChart').click(function() {
 $('#numberByLanguageChart').click(function() {
   showLoading($(this).html());
   $.ajax({
+    type: "POST",
     url: 'numberbylanguage',
     dataType: 'json',
+    data: { 'place': Cookies.get('place') },
     success: function (data) {
       showChart();
       dataProvider = [];

@@ -50,12 +50,18 @@ def dataNumberByAgeView(request):
         return data
 
 @ajax
+@csrf_exempt
 def dataNumberByLanguageView(request):
-    query_objects = Participant.objects.values('TP_LINGUA').annotate(COUNT = Count('TP_LINGUA'))
-    data = {
-      'result': query_objects
-    }
-    return data
+    if (request.method == 'POST'):
+        place = request.POST.get('place')
+        if(place !="BR"):
+            query_objects = Participant.objects.filter(SG_UF_PROVA=place).values('TP_LINGUA').annotate(COUNT = Count('TP_LINGUA'))
+        else:
+            query_objects = Participant.objects.values('TP_LINGUA').annotate(COUNT = Count('TP_LINGUA'))
+        data = {
+        'result': query_objects
+        }
+        return data
 
 @ajax
 def dataNumberByInternetView(request):
