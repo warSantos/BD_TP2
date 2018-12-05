@@ -12,9 +12,11 @@ function showChart() {
 }
 
 $('#confButton').click(function() {
-  $('#chart-content').show("slow");
+  showLoading("Estados");
   showChart();
-  var map = AmCharts.makeChart( "chart-area", {
+  Cookies.set('place', 'BR');
+  $("#place").html(Cookies.get('place'));
+  AmCharts.makeChart( "chart-area", {
     "type": "map",
     "theme": "light",
     "panEventsEnabled": true,
@@ -32,7 +34,7 @@ $('#confButton').click(function() {
       "rollOverOutlineColor": "#FFFFFF",
       "selectable": true
     },
-    "listeners": [ {
+    "listeners": [{
       "event": "clickMapObject",
       "method": function( event ) {
         Cookies.set('place', event.mapObject.id.substring(3, 6));
@@ -144,6 +146,52 @@ $('#numberByAgeChart').click(function() {
         "export": {
           "enabled": true
         }
+      });
+    }
+  });
+});
+
+$('#numberBySchoolChart').click(function() {
+  showLoading($(this).html());
+  $.ajax({
+    type: "POST",
+    url: 'numberbyschool',
+    dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+    success: function (data) {
+      showChart();
+      AmCharts.makeChart("chart-area", {
+        "type": "serial",
+        "theme": "light",
+        "marginRight": 70,
+        "dataProvider": data.content.result,
+        "valueAxes": [{
+          "axisAlpha": 0,
+          "position": "left"
+        }],
+        "startDuration": 1,
+        "graphs": [{
+          "balloonText": "<b>[[category]]: [[value]]</b>",
+          "fillColorsField": "color",
+          "fillAlphas": 0.9,
+          "lineAlpha": 0.2,
+          "type": "column",
+          "valueField": "value"
+        }],
+        "chartCursor": {
+          "categoryBalloonEnabled": false,
+          "cursorAlpha": 0,
+          "zoomable": false
+        },
+        "categoryField": "title",
+        "categoryAxis": {
+          "gridPosition": "start",
+          "labelRotation": 45
+        },
+        "export": {
+          "enabled": true
+        }
+      
       });
     }
   });
@@ -314,7 +362,6 @@ $('#performanceByGenreChart').click(function() {
     url: 'performancebygenre',
     dataType: 'json',
     data: { 'place': Cookies.get('place') },
-    
     success: function (data) {
       console.log(data);
       showChart();
@@ -381,6 +428,55 @@ $('#performanceByGenreChart').click(function() {
           "valueField": "Masculino"
         }],
         "categoryField": "Tipo",
+        "export": {
+          "enabled": true
+        }
+      });
+    }
+  });
+});
+
+$('#performanceBySchoolChart').click(function() {
+  showLoading($(this).html());
+  $.ajax({
+    type: "POST",
+    url: 'performancebyschool',
+    dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+    success: function (data) {
+      showChart();
+      dataProvider = [];
+      $.each(data.content.result, function(index, value) {        
+        switch(value.Q025) {
+          case "A":
+            dataProvider.push({
+              "title": "Não",
+              "value": value.COUNT
+            });
+            break;
+          case "B":
+            dataProvider.push({
+              "title": "Sim",
+              "value": value.COUNT
+            });
+            break;
+        }
+      });
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",
+        "theme": "light",
+        "dataProvider": dataProvider,
+        "titleField": "title",
+        "valueField": "value",
+        "labelRadius": 5,
+        "radius": "42%",
+        "innerRadius": "60%",
+        "labelText": "[[title]]",
+        "legend":{
+          "position":"right",
+          "marginRight":100,
+          "autoMargins":false
+        },
         "export": {
           "enabled": true
         }

@@ -37,12 +37,23 @@
     padding: 1vw;
     position: absolute;
     color: #006CB7;
-    cursor: pointer;
     z-index: 99;
 }
 
-#confButton {
+.topButtonLeft {
+    left: 0;
+}
+
+.topButtonRight {
     right: 0;
+}
+
+#sidebarCollapse, #confButton {
+    cursor: pointer;
+}
+
+#sidebarCollapse:hover, #confButton:hover {
+    opacity: 0.8;
 }
 
 .amcharts-chart-div {

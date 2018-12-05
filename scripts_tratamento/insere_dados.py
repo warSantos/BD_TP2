@@ -23,7 +23,7 @@ def inserir_dados (arquivos_json):
 	cliente = pymongo.MongoClient ("mongodb://localhost:27017/")
 	banco = cliente["enem"]
 	# Inserindo dados no banco.
-	colecao = banco["participantes"]
+	colecao = banco["enem_participant"]
 	retorno = colecao.insert_many (tuplas)
 
 if __name__=='__main__':
