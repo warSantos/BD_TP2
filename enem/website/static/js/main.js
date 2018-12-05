@@ -403,7 +403,7 @@ $('#performanceByEstadosChart').click(function() {
         "dataProvider":data.content.result,
         "valueAxes": [{
             "position": "left",
-            "title": "Nota"
+            "title": "Nota-Media"
         }],
         "graphs": [{
             "balloonText": "[[category]]: <b>[[value]]</b>",
@@ -477,6 +477,86 @@ $('#situacaoEnsinoMedio').click(function() {
     }
   })
 });
+
+$('#performanceByEtinicoChart').click(function(){
+  showLoading($(this).html());
+  $.ajax({
+    type:"POST",
+    url: 'performancebyetinico',
+    dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+    success: function(data){
+      console.log(data);
+      showChart();
+      dataProvider=[];
+      values  = {};
+      
+       $.each(data.content.result, function(index, value) {
+        if(value.cor== "0"){
+          values["Não_declarado"] = value.media;
+        }else if(value.cor=="1") {
+          values["Branca"] = value.media;
+        }else if(value.cor== "2"){
+          values["Preta"] = value.media;
+        }else if(value.cor== "3"){
+          values["Parda"]=value.media;
+        }else if(value.cor== "4"){
+          value["Amarela"]=value.media;
+        }else if(value.cor == "5" ){
+          value["Indígena"]=value.media;
+        }
+      });
+      dataProvider.push(values);
+      var chart = AmCharts.makeChart( "chartdiv", {
+        "type": "pie",
+        "theme": "none",
+        "titles": [ {
+          "text": "Visitors countries",
+          "size": 16
+        } ],
+        "dataProvider": [ {
+          "country": "United States",
+          "visits": 7252
+        }, {
+          "country": "China",
+          "visits": 3882
+        }, {
+          "country": "Japan",
+          "visits": 1809
+        }, {
+          "country": "Germany",
+          "visits": 1322
+        }, {
+          "country": "United Kingdom",
+          "visits": 1122
+        }, {
+          "country": "France",
+          "visits": 414
+        }, {
+          "country": "India",
+          "visits": 384
+        }, {
+          "country": "Spain",
+          "visits": 211
+        } ],
+        "valueField": "visits",
+        "titleField": "country",
+        "startEffect": "elastic",
+        "startDuration": 2,
+        "labelRadius": 15,
+        "innerRadius": "50%",
+        "depth3D": 10,
+        "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+        "angle": 15,
+        "export": {
+          "enabled": true
+        }
+      } );
+    }
+  });
+});
+
+
 
 $(document).ready(function () {  
   if (Cookies.get('place') == undefined) {
