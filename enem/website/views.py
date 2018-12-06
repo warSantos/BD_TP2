@@ -310,6 +310,7 @@ def dataSituacaoEnsinoMedioView(request):
 
         # print(data)
         return data
+
 @ajax
 @csrf_exempt
 def dataperformanceByEtinicoView(request):
@@ -373,8 +374,10 @@ def dataperformanceByEtinicoView(request):
 #         query_objects = {}
 
 
+@ajax
+@csrf_exempt
+def info(request):
+    return render(request, "website/info.html", {})
+
 def index(request):
-    data = {
-      
-    }
-    return render(request, "website/index.html", data)
+    return render(request, "website/index.html", {})

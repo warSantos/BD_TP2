@@ -17,6 +17,20 @@ function hideChart() {
   $('#chart-content').hide("slow");
 }
 
+$('#infoButton').click(function() {
+  $.ajax({
+    url: 'info',
+    dataType: 'json',
+    success: function (data) {
+      $("#page-modal").html(data.content);
+      $("#page-modal").modal({
+        escapeClose: false,
+        showClose: false
+      });
+    }
+  });
+});
+
 $('#confButton').click(function() {
   if (($("#chart-area").is(":visible")) && ($('.chart-title').html() == "Estados")) {
     hideChart();

@@ -3,6 +3,11 @@
     src: url(../webfonts/montserrat/Montserrat-Regular.ttf)
 }
 
+h1, h2, h3, h4, h5, h6, p {
+    font-family: Montserrat;
+    margin: 0;
+}
+
 #chart-content {
     width: 100%;
     height: 50%;
@@ -32,12 +37,22 @@
     font-family: Montserrat;
 }
 
+.infoButtonArea {
+    text-align: center;
+    padding: 0.5vw;
+    font-size: 2vw;
+}
+
+#infoButton {
+    cursor: pointer;
+}
+
 .topButton {
     font-size: 2vw;
     padding: 1vw;
     position: absolute;
     color: #006CB7;
-    z-index: 99;
+    z-index: 1;
 }
 
 .topButtonLeft {
@@ -110,6 +125,7 @@ a:focus {
 #sidebar h3 {
     text-align: center;
     font-family: Montserrat;
+    padding: 0.5vw;
 }
 
 #sidebar ul p {
@@ -176,22 +192,36 @@ a.article:hover {
     color: #fff !important;
 }
 
+.modal-body {
+    padding: 2vw;
+    text-align: center;
+}
+
+.modal-block {
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+}
+
+.modal {
+    max-width: 600px;
+}
+
 @media (max-width: 1024px) {
-    .topButtonLeft, .topButtonRight {
+    .topButtonLeft, .topButtonRight, .infoButtonArea {
         font-size: 3vw;
         padding: 1.5vw;
     }    
 }
 
 @media (max-width: 768px) {
-    .topButtonLeft, .topButtonRight {
+    .topButtonLeft, .topButtonRight, .infoButtonArea {
         font-size: 4vw;
         padding: 2vw;
     }
 }
 
 @media (max-width: 425px) {
-    .topButtonLeft, .topButtonRight {
+    .topButtonLeft, .topButtonRight, .infoButtonArea {
         font-size: 6vw;
         padding: 3vw;
     }
