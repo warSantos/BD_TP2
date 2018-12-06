@@ -499,7 +499,7 @@ $('#performanceByEstadosChart').click(function() {
         "dataProvider":data.content.result,
         "valueAxes": [{
             "position": "left",
-            "title": "Nota"
+            "title": "Nota-Media"
         }],
         "graphs": [{
             "balloonText": "[[category]]: <b>[[value]]</b>",
@@ -573,6 +573,64 @@ $('#situacaoEnsinoMedio').click(function() {
     }
   })
 });
+
+$('#performanceByEtinicoChart').click(function(){
+  showLoading($(this).html());
+  $.ajax({
+    type:"POST",
+    url: 'performancebyetinico',
+    dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+    success: function(data){
+      console.log(data);
+      showChart();
+      dataProvider=[];
+      values  = {};
+      
+       $.each(data.content.result, function(index, value) {
+        if(value.cor== "0"){
+          values["Nao_declarado"] = value.media;
+        }else if(value.cor=="1") {
+          values["Branca"] = value.media;
+        }else if(value.cor== "2"){
+          values["Preta"] = value.media;
+        }else if(value.cor== "3"){
+          values["Parda"]=value.media;
+        }else if(value.cor == "4"){
+          values["Amarela"]=value.media;
+        }else if(value.cor == "5" ){
+          values["Indigena"]=value.media;
+        }
+      });
+      dataProvider.push(values);
+      console.log(dataProvider)
+      var chart = AmCharts.makeChart( "chart-area", {
+        "type": "pie",
+        "theme": "none",
+        "titles": [ {
+          "text": "Visitors countries",
+          "size": 16
+        } ],
+        "dataProvider":dataProvider, 
+        "valueField":"Branco",
+        "titleField": "",
+        "startEffect": "elastic",
+        "startDuration": 2,
+        "labelRadius": 15,
+        "innerRadius": "50%",
+        "depth3D": 10,
+        "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+        "angle": 15,
+        "categoryField": "Tipo",
+        "export": {
+          "enabled": true
+        }
+      } );
+    }
+  });
+});
+
+
 
 $(document).ready(function () {  
   if (Cookies.get('place') == undefined) {

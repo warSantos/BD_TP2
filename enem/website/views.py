@@ -264,6 +264,53 @@ def dataSituacaoEnsinoMedioView(request):
 
         # print(data)
         return data
+@ajax
+@csrf_exempt
+def dataperformanceByEtinicoView(request):
+    if(request.method == 'POST'):
+        place = request.POST.get('place')
+        query_objects = {}
+        if(place != "BR"):
+            query_objects['TP_COR_RACA'] = Participant.objects.filter(SG_UF_PROVA=place).values('TP_COR_RACA').annotate(COUNT = Count('TP_COR_RACA')).order_by('TP_COR_RACA')
+            query_objects['NU_NOTA'] = Participant.objects.filter(SG_UF_PROVA=place).values('TP_COR_RACA').annotate(
+                SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
+                SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
+                SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
+                SUM_NU_NOTA_MT = Sum('NU_NOTA_MT')
+                ).order_by('TP_COR_RACA')
+            participants = []
+            for obj in query_objects['TP_COR_RACA']:
+                for obj_sum in query_objects['NU_NOTA']:
+                    if (obj['TP_COR_RACA'] == obj_sum['TP_COR_RACA']):
+                        media = ((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4
+                        participants.append({
+                            "cor": obj['TP_COR_RACA'],
+                            "media": media
+                        })
+                        break
+
+        else:
+            query_objects['TP_COR_RACA'] = Participant.objects.values('TP_COR_RACA').annotate(COUNT = Count('TP_COR_RACA')).order_by('TP_COR_RACA')
+            query_objects['NU_NOTA'] = Participant.objects.values('TP_COR_RACA').annotate(
+                SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
+                SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
+                SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
+                SUM_NU_NOTA_MT = Sum('NU_NOTA_MT')
+            ).order_by('TP_COR_RACA')
+            participants = []
+            for obj in query_objects['TP_COR_RACA']:
+                for obj_sum in query_objects['NU_NOTA']:
+                    if (obj['TP_COR_RACA'] == obj_sum['TP_COR_RACA']):
+                        media = ((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4
+                        participants.append({
+                            "cor": obj['TP_COR_RACA'],
+                            "media": media
+                        })
+                        break
+        data = {
+        'result': participants
+        }
+        return data
 
 def index(request):
     data = {
