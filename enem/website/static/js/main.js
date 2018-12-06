@@ -360,6 +360,7 @@ $('#performanceByGenreChart').click(function() {
     dataType: 'json',
     data: { 'place': Cookies.get('place') },
     success: function (data) {
+      console.log(data);
       showChart();
       dataProvider = [];
       values = {};
@@ -399,6 +400,16 @@ $('#performanceByGenreChart').click(function() {
           values["Feminino"] = value.media_NOTA_MT;
         } else {
           values["Masculino"] = value.media_NOTA_MT;
+        }
+      });
+      dataProvider.push(values);
+      values = {};
+      values["Tipo"] = "Redação"
+      $.each(data.content.result, function(index, value) {
+        if (value.genre == "F") {
+          values["Feminino"] = value.media_NOTA_REDACAO;
+        } else {
+          values["Masculino"] = value.media_NOTA_REDACAO;
         }
       });
       dataProvider.push(values);
