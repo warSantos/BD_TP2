@@ -140,8 +140,7 @@ $('#numberByAgeChart').click(function() {
         },
         "legend":{
           "position":"right",
-          "marginRight":100,
-          "autoMargins":false
+          "autoMargins":true
         },
         "export": {
           "enabled": true
@@ -235,8 +234,7 @@ $('#numberByLanguageChart').click(function() {
         "labelText": "[[title]]",
         "legend":{
           "position":"right",
-          "marginRight":100,
-          "autoMargins":false
+          "autoMargins":true
         },
         "export": {
           "enabled": true
@@ -255,6 +253,7 @@ $('#numberByInternetChart').click(function() {
     data: { 'place': Cookies.get('place') },
     
     success: function (data) {
+      console.log(data);
       showChart();
       dataProvider = [];
       $.each(data.content.result, function(index, value) {        
@@ -285,8 +284,7 @@ $('#numberByInternetChart').click(function() {
         "labelText": "[[title]]",
         "legend":{
           "position":"right",
-          "marginRight":100,
-          "autoMargins":false
+          "autoMargins":true
         },
         "export": {
           "enabled": true
@@ -344,8 +342,7 @@ $('#numberByPresenceChart').click(function() {
         },
         "legend":{
           "position":"right",
-          "marginRight":100,
-          "autoMargins":false
+          "autoMargins":true
         },
         "export": {
           "enabled": true
@@ -406,6 +403,16 @@ $('#performanceByGenreChart').click(function() {
         }
       });
       dataProvider.push(values);
+      values = {};
+      values["Tipo"] = "Redação"
+      $.each(data.content.result, function(index, value) {
+        if (value.genre == "F") {
+          values["Feminino"] = value.media_NOTA_REDACAO;
+        } else {
+          values["Masculino"] = value.media_NOTA_REDACAO;
+        }
+      });
+      dataProvider.push(values);
       AmCharts.makeChart("chart-area", {
         "type": "radar",
         "theme": "light",
@@ -445,37 +452,19 @@ $('#performanceBySchoolChart').click(function() {
     data: { 'place': Cookies.get('place') },
     success: function (data) {
       showChart();
-      dataProvider = [];
-      $.each(data.content.result, function(index, value) {        
-        switch(value.Q025) {
-          case "A":
-            dataProvider.push({
-              "title": "Não",
-              "value": value.COUNT
-            });
-            break;
-          case "B":
-            dataProvider.push({
-              "title": "Sim",
-              "value": value.COUNT
-            });
-            break;
-        }
-      });
       AmCharts.makeChart("chart-area", {
         "type": "pie",
         "theme": "light",
-        "dataProvider": dataProvider,
-        "titleField": "title",
-        "valueField": "value",
+        "dataProvider": data.content.result,
+        "titleField": "escola",
+        "valueField": "media",
         "labelRadius": 5,
         "radius": "42%",
         "innerRadius": "60%",
-        "labelText": "[[title]]",
+        "labelText": "[[escola]]",
         "legend":{
           "position":"right",
-          "marginRight":100,
-          "autoMargins":false
+          "autoMargins":true
         },
         "export": {
           "enabled": true
@@ -557,8 +546,7 @@ $('#situacaoEnsinoMedio').click(function() {
         "labelText": "[[title]]",
         "legend":{
           "position":"right",
-          "marginRight":100,
-          "autoMargins":false
+          "autoMargins":true
         },
         "export": {
           "enabled": true

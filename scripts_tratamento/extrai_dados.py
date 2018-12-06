@@ -17,8 +17,10 @@ def ler_arquivo (path):
 def criar_mascara (atributos, at_utilizados):
 	# Recebendo lista com todos os atributos.
 	lista_atributos = ler_arquivo (atributos)
+	#lista_atributos.pop()
 	# Recebendo lista com os atributos utilizados.
 	lista_at_ut = ler_arquivo (at_utilizados)
+	#lista_at_ut.pop ()
 	tipos = list()
 	mascara = [0] * len (lista_atributos)
 	cont = 0

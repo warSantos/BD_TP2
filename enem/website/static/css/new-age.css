@@ -155,8 +155,7 @@ section h2 {
 header.masthead {
   position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 775px;
+  height: 100%;
   color: white;
   /* background: url("../img/bg-pattern.png"), #FFF176;
   background: url("../img/bg-pattern.png"), -webkit-gradient(linear, right top, left top, from(#FFF176), to(#FDD835));
