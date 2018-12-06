@@ -62,6 +62,7 @@ $('#confButton').click(function() {
         "method": function( event ) {
           Cookies.set('place', event.mapObject.id.substring(3, 6));
           $("#place").html(Cookies.get('place'));
+          hideChart();
         }
       }]
     });
@@ -285,9 +286,7 @@ $('#numberByInternetChart').click(function () {
     data: {
       'place': Cookies.get('place')
     },
-
     success: function (data) {
-      console.log(data);
       showChart();
       dataProvider = [];
       $.each(data.content.result, function (index, value) {
@@ -585,6 +584,57 @@ $('#performanceByEstadosChart').click(function () {
   });
 });
 
+$('#performanceByInternetChart').click(function () {
+  showLoading($(this).html());
+  $.ajax({
+    type: "POST",
+    url: 'performancebyinternet',
+    dataType: 'json',
+    data: {
+      'place': Cookies.get('place')
+    },
+    success: function (data) {
+      console.log(data.content.result);
+      showChart();
+      dataProvider = [];
+      $.each(data.content.result, function (index, value) {
+        switch (value.title) {
+          case "A":
+            dataProvider.push({
+              "title": "Não",
+              "value": value.nota
+            });
+            break;
+          case "B":
+            dataProvider.push({
+              "title": "Sim",
+              "value": value.nota
+            });
+            break;
+        }
+      });
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",
+        "theme": "light",
+        "dataProvider": dataProvider,
+        "titleField": "title",
+        "valueField": "value",
+        "labelRadius": 5,
+        "radius": "42%",
+        "innerRadius": "60%",
+        "labelText": "[[title]]",
+        "legend": {
+          "position": "right",
+          "autoMargins": true
+        },
+        "export": {
+          "enabled": true
+        }
+      });
+    }
+  });
+});
+
 $('#situacaoEnsinoMedio').click(function () {
   showLoading($(this).html());
   console.log("Antes da chamada do ajax");
@@ -664,43 +714,6 @@ $('#performanceByEtinicoChart').click(function () {
   });
 });
 
-<<<<<<< HEAD
-$('#cornumeroChart').click(function(){
-  showLoading($(this).html());
-  $.ajax({
-    type:"POST",
-    url: 'cornumero',
-    dataType: 'json',
-    data: { 'place': Cookies.get('place') },
-    success: function(data){
-      showChart();
-      console.log(data);
-      AmCharts.makeChart("chart-area", {
-        "type": "pie",  
-        "theme": "light",
-        "dataProvider":data.content.result, 
-        "valueField":"value",
-        "titleField": "cor",
-        "startEffect": "elastic",
-        "startDuration": 2,
-        "labelRadius": 15,
-        "innerRadius": "50%",
-        "depth3D": 10,
-        "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-        "angle": 15,
-        "categoryField": "Tipo",
-        "legend":{
-          "position":"right",
-          "autoMargins":true
-=======
-// $('#cornumeroChart').click(function(){
-//   showLoading($(this).html());
-//   $.ajax({
-//     type:"POST",
-//     url: 'cornumero',
-//     dataType: 'json',
-//     data: { 'place': Cookies.get('place') },
-
 $('#numberByIncomeChart').click(function () {
   showLoading($(this).html());
   $.ajax({
@@ -716,7 +729,7 @@ $('#numberByIncomeChart').click(function () {
 
       AmCharts.makeChart("chart-area", {
         "type": "serial",
-        "theme": "none",
+        "theme": "light",
         "legend": {
           "horizontalGap": 10,
           "maxColumns": 1,
@@ -756,16 +769,10 @@ $('#numberByIncomeChart').click(function () {
           "gridAlpha": 0,
           "position": "left",
           "labelRotation": 30
->>>>>>> bace8f56902fc33bb66be13da092dd67d833d339
         },
         "export": {
           "enabled": true
         }
-<<<<<<< HEAD
-      });
-=======
->>>>>>> bace8f56902fc33bb66be13da092dd67d833d339
-
       });
     },
     error: function (data) {
@@ -778,15 +785,40 @@ $('#numberByIncomeChart').click(function () {
   });
 });
 
-<<<<<<< HEAD
-
+$('#cornumeroChart').click(function(){
+  showLoading($(this).html());
+  $.ajax({
+    type:"POST",
+    url: 'cornumero',
+    dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+    success: function(data){
+      showChart();
+      console.log(data);
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",  
+        "theme": "light",
+        "dataProvider":data.content.result, 
+        "valueField":"value",
+        "titleField": "cor",
+        "startEffect": "elastic",
+        "startDuration": 2,
+        "labelRadius": 15,
+        "innerRadius": "50%",
+        "depth3D": 10,
+        "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+        "angle": 15,
+        "categoryField": "Tipo",
+        "legend":{
+          "position":"right",
+          "autoMargins":true
+        }
+      });
     }
   });
 });
+
 $(document).ready(function () {  
-=======
-$(document).ready(function () {
->>>>>>> bace8f56902fc33bb66be13da092dd67d833d339
   if (Cookies.get('place') == undefined) {
     Cookies.set('place', 'BR');
   }

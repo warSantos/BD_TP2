@@ -14,14 +14,9 @@ urlpatterns = [
     path('numberbyincome',views.dataNumberByIncomeView, name='dataNumberByIncomeView'),
     path('performancebygenre', views.dataPerformanceByGenreView, name='dataPerformanceByGenreView'),
     path('performancebyschool', views.dataPerformanceBySchoolView, name='dataPerformanceBySchoolView'),
-<<<<<<< HEAD
-    path('performancebyestados',views.dataperformanceByEstadosView, name='dataPerformanceByEstadosView'),
-    path('situacaoensinomedio',views.dataSituacaoEnsinoMedioView, name='dataSituacaoEnsinoMedioView'),
-    path('performancebyetinico',views.dataperformanceByEtinicoView, name='dataperformanceByEtinicoView'),
-    path('cornumero',views.datacornumeroView,name='datacornumeroView')
-=======
     path('performancebyestados', views.dataperformanceByEstadosView, name='dataPerformanceByEstadosView'),
     path('situacaoensinomedio', views.dataSituacaoEnsinoMedioView, name='dataSituacaoEnsinoMedioView'),
-    path('performancebyetinico', views.dataperformanceByEtinicoView, name='dataperformanceByEtinicoView'),    
->>>>>>> bace8f56902fc33bb66be13da092dd67d833d339
+    path('performancebyetinico', views.dataperformanceByEtinicoView, name='dataperformanceByEtinicoView'),
+    path('performancebyinternet', views.dataPerformanceByInternetView, name='dataPerformanceByInternetView'),
+    path('cornumero',views.datacornumeroView,name='datacornumeroView')
 ]

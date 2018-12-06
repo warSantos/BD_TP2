@@ -40,15 +40,11 @@ h1, h2, h3, h4, h5, h6, p {
 .infoButtonArea {
     text-align: center;
     padding: 0.5vw;
-    font-size: 2vw;
-}
-
-#infoButton {
-    cursor: pointer;
+    font-size: 1.5vw;
 }
 
 .topButton {
-    font-size: 2vw;
+    font-size: 1.5vw;
     padding: 1vw;
     position: absolute;
     color: #006CB7;
@@ -63,11 +59,11 @@ h1, h2, h3, h4, h5, h6, p {
     right: 0;
 }
 
-#sidebarCollapse, #confButton {
+#sidebarCollapse, #confButton, #infoButton {
     cursor: pointer;
 }
 
-#sidebarCollapse:hover, #confButton:hover {
+#sidebarCollapse:hover, #confButton:hover, #infoButton:hover {
     opacity: 0.8;
 }
 
@@ -190,6 +186,11 @@ a.article,
 a.article:hover {
     background: #6d7fcc !important;
     color: #fff !important;
+}
+
+.modal-header {
+    text-align: center;
+    display: block;
 }
 
 .modal-body {
