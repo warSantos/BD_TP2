@@ -604,7 +604,7 @@ $('#performanceByEtinicoChart').click(function(){
       });
       dataProvider.push(values);
       console.log(dataProvider)
-      var chart = AmCharts.makeChart( "chart-area", {
+      var chart = AmCharts.makeChart("chart-area", {
         "type": "pie",
         "theme": "none",
         "titles": [ {
