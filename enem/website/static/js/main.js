@@ -589,54 +589,31 @@ $('#performanceByEtinicoChart').click(function(){
       
        $.each(data.content.result, function(index, value) {
         if(value.cor== "0"){
-          values["Não_declarado"] = value.media;
+          values["Nao_declarado"] = value.media;
         }else if(value.cor=="1") {
           values["Branca"] = value.media;
         }else if(value.cor== "2"){
           values["Preta"] = value.media;
         }else if(value.cor== "3"){
           values["Parda"]=value.media;
-        }else if(value.cor== "4"){
-          value["Amarela"]=value.media;
+        }else if(value.cor == "4"){
+          values["Amarela"]=value.media;
         }else if(value.cor == "5" ){
-          value["Indígena"]=value.media;
+          values["Indigena"]=value.media;
         }
       });
       dataProvider.push(values);
-      var chart = AmCharts.makeChart( "chartdiv", {
+      console.log(dataProvider)
+      var chart = AmCharts.makeChart( "chart-area", {
         "type": "pie",
         "theme": "none",
         "titles": [ {
           "text": "Visitors countries",
           "size": 16
         } ],
-        "dataProvider": [ {
-          "country": "United States",
-          "visits": 7252
-        }, {
-          "country": "China",
-          "visits": 3882
-        }, {
-          "country": "Japan",
-          "visits": 1809
-        }, {
-          "country": "Germany",
-          "visits": 1322
-        }, {
-          "country": "United Kingdom",
-          "visits": 1122
-        }, {
-          "country": "France",
-          "visits": 414
-        }, {
-          "country": "India",
-          "visits": 384
-        }, {
-          "country": "Spain",
-          "visits": 211
-        } ],
-        "valueField": "visits",
-        "titleField": "country",
+        "dataProvider":dataProvider, 
+        "valueField":"Branco",
+        "titleField": "",
         "startEffect": "elastic",
         "startDuration": 2,
         "labelRadius": 15,
@@ -644,6 +621,7 @@ $('#performanceByEtinicoChart').click(function(){
         "depth3D": 10,
         "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
         "angle": 15,
+        "categoryField": "Tipo",
         "export": {
           "enabled": true
         }
