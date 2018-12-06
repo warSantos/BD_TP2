@@ -633,8 +633,20 @@ $('#performanceByEtinicoChart').click(function(){
   });
 });
 
+// $('#cornumeroChart').click(function(){
+//   showLoading($(this).html());
+//   $.ajax({
+//     type:"POST",
+//     url: 'cornumero',
+//     dataType: 'json',
+//     data: { 'place': Cookies.get('place') },
 
 
+
+
+
+
+// });
 $(document).ready(function () {  
   if (Cookies.get('place') == undefined) {
     Cookies.set('place', 'BR');

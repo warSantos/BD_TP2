@@ -356,6 +356,23 @@ def dataperformanceByEtinicoView(request):
         }
         return data
 
+
+# @ajax
+# @csrf_exempt
+# def cornumeroView(request):
+#     if (request.method == 'POST'):
+#       titles = {
+#             '0': "Nao_declarado",
+#             '1': "Branca",
+#             '2': "Preta",
+#             '3': "Parda",
+#             '4': "Amarela",
+#             '5': "Indigena"
+#         }
+#         place = request.POST.get('place')
+#         query_objects = {}
+
+
 def index(request):
     data = {
       
