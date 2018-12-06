@@ -17,6 +17,20 @@ function hideChart() {
   $('#chart-content').hide("slow");
 }
 
+$('#infoButton').click(function() {
+  $.ajax({
+    url: 'info',
+    dataType: 'json',
+    success: function (data) {
+      $("#page-modal").html(data.content);
+      $("#page-modal").modal({
+        escapeClose: false,
+        showClose: false
+      });
+    }
+  });
+});
+
 $('#confButton').click(function() {
   if (($("#chart-area").is(":visible")) && ($('.chart-title').html() == "Estados")) {
     hideChart();
@@ -60,13 +74,15 @@ $('#numberByGenreChart').click(function() {
     type: "POST",
     url: 'numberbygenre',
     dataType: 'json',
-    data: { place: Cookies.get('place') },
+    data: {
+      place: Cookies.get('place')
+    },
     success: function (data) {
       showChart();
       dataProvider = [];
       max = 0;
-      $.each(data.content.result, function(index, value) {        
-        switch(value.TP_SEXO) {
+      $.each(data.content.result, function (index, value) {
+        switch (value.TP_SEXO) {
           case "F":
             dataProvider.push({
               "name": "Feminino",
@@ -87,70 +103,40 @@ $('#numberByGenreChart').click(function() {
         max += value.COUNT;
       });
       AmCharts.makeChart("chart-area", {
-          "type": "serial",
-          "theme": "light",
-          "dataProvider": dataProvider,
-          "valueAxes": [{
-            "maximum": max,
-            "minimum": 0,
-            "axisAlpha": 0,
-            "dashLength": 4,
-            "position": "left"
-          }],
-          "startDuration": 1,
-          "graphs": [{
-            "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
-            "bulletOffset": 10,
-            "bulletSize": 52,
-            "colorField": "color",
-            "cornerRadiusTop": 8,
-            "customBulletField": "bullet",
-            "fillAlphas": 0.8,
-            "lineAlpha": 0,
-            "type": "column",
-            "valueField": "points"
-          }],
-          "marginTop": 0,
-          "marginRight": 0,
-          "marginLeft": 0,
-          "marginBottom": 0,
-          "autoMargins": false,
-          "categoryField": "name",
-          "categoryAxis": {
-            "axisAlpha": 0,
-            "gridAlpha": 0,
-            "inside": true,
-            "tickLength": 0
-          },
-          "export": {
-            "enabled": true
-          }
-      });
-    }
-  });
-});
-
-$('#numberByAgeChart').click(function() {
-  showLoading($(this).html());
-  $.ajax({
-    type: "POST",
-    url: 'numberbyage',
-    dataType: 'json',
-    data: { 'place': Cookies.get('place') },
-    success: function (data) {
-      showChart();
-      AmCharts.makeChart("chart-area", {
-        "type": "pie",
+        "type": "serial",
         "theme": "light",
-        "dataProvider": data.content.result,
-        "valueField": "count",
-        "titleField": "age",
-        "balloon":{
-        "fixedPosition":true
-        },
-        "legend":{
-          "position":"right",
-          "autoMargins":true
+        "dataProvider": dataProvider,
+        "valueAxes": [{
+          "maximum": max,
+          "minimum": 0,
+          "axisAlpha": 0,
+          "dashLength": 4,
+          "position": "left"
+        }],
+        "startDuration": 1,
+        "graphs": [{
+          "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
+          "bulletOffset": 10,
+          "bulletSize": 52,
+          "colorField": "color",
+          "cornerRadiusTop": 8,
+          "customBulletField": "bullet",
+          "fillAlphas": 0.8,
+          "lineAlpha": 0,
+          "type": "column",
+          "valueField": "points"
+        }],
+        "marginTop": 0,
+        "marginRight": 0,
+        "marginLeft": 0,
+        "marginBottom": 0,
+        "autoMargins": false,
+        "categoryField": "name",
+        "categoryAxis": {
+          "axisAlpha": 0,
+          "gridAlpha": 0,
+          "inside": true,
+          "tickLength": 0
         },
         "export": {
           "enabled": true
@@ -160,13 +146,47 @@ $('#numberByAgeChart').click(function() {
   });
 });
 
-$('#numberBySchoolChart').click(function() {
+$('#numberByAgeChart').click(function () {
+  showLoading($(this).html());
+  $.ajax({
+    type: "POST",
+    url: 'numberbyage',
+    dataType: 'json',
+    data: {
+      'place': Cookies.get('place')
+    },
+    success: function (data) {
+      showChart();
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",
+        "theme": "light",
+        "dataProvider": data.content.result,
+        "valueField": "count",
+        "titleField": "age",
+        "balloon": {
+          "fixedPosition": true
+        },
+        "legend": {
+          "position": "right",
+          "autoMargins": true
+        },
+        "export": {
+          "enabled": true
+        }
+      });
+    }
+  });
+});
+
+$('#numberBySchoolChart').click(function () {
   showLoading($(this).html());
   $.ajax({
     type: "POST",
     url: 'numberbyschool',
     dataType: 'json',
-    data: { 'place': Cookies.get('place') },
+    data: {
+      'place': Cookies.get('place')
+    },
     success: function (data) {
       showChart();
       AmCharts.makeChart("chart-area", {
@@ -200,24 +220,26 @@ $('#numberBySchoolChart').click(function() {
         "export": {
           "enabled": true
         }
-      
+
       });
     }
   });
 });
 
-$('#numberByLanguageChart').click(function() {
+$('#numberByLanguageChart').click(function () {
   showLoading($(this).html());
   $.ajax({
     type: "POST",
     url: 'numberbylanguage',
     dataType: 'json',
-    data: { 'place': Cookies.get('place') },
+    data: {
+      'place': Cookies.get('place')
+    },
     success: function (data) {
       showChart();
       dataProvider = [];
-      $.each(data.content.result, function(index, value) {        
-        switch(value.TP_LINGUA) {
+      $.each(data.content.result, function (index, value) {
+        switch (value.TP_LINGUA) {
           case "0":
             dataProvider.push({
               "title": "Inglês",
@@ -242,9 +264,9 @@ $('#numberByLanguageChart').click(function() {
         "radius": "42%",
         "innerRadius": "60%",
         "labelText": "[[title]]",
-        "legend":{
-          "position":"right",
-          "autoMargins":true
+        "legend": {
+          "position": "right",
+          "autoMargins": true
         },
         "export": {
           "enabled": true
@@ -254,20 +276,22 @@ $('#numberByLanguageChart').click(function() {
   });
 });
 
-$('#numberByInternetChart').click(function() {
+$('#numberByInternetChart').click(function () {
   showLoading($(this).html());
   $.ajax({
     type: "POST",
     url: 'numberbyinternet',
     dataType: 'json',
-    data: { 'place': Cookies.get('place') },
-    
+    data: {
+      'place': Cookies.get('place')
+    },
+
     success: function (data) {
       console.log(data);
       showChart();
       dataProvider = [];
-      $.each(data.content.result, function(index, value) {        
-        switch(value.Q025) {
+      $.each(data.content.result, function (index, value) {
+        switch (value.Q025) {
           case "A":
             dataProvider.push({
               "title": "Não",
@@ -292,9 +316,9 @@ $('#numberByInternetChart').click(function() {
         "radius": "42%",
         "innerRadius": "60%",
         "labelText": "[[title]]",
-        "legend":{
-          "position":"right",
-          "autoMargins":true
+        "legend": {
+          "position": "right",
+          "autoMargins": true
         },
         "export": {
           "enabled": true
@@ -304,7 +328,7 @@ $('#numberByInternetChart').click(function() {
   });
 });
 
-$('#numberByPresenceChart').click(function() {
+$('#numberByPresenceChart').click(function () {
   showLoading($(this).html());
   $.ajax({
     type: "POST",
@@ -319,41 +343,41 @@ $('#numberByPresenceChart').click(function() {
         "dataProvider": data.content.result,
         "startDuration": 1,
         "graphs": [{
-            "balloonText": "Presentes: [[value]]",
-            "fillAlphas": 0.9,
-            "lineAlpha": 0.2,
-            "title": "Presentes",
-            "type": "column",
-            "clustered":false,
-            "columnWidth":0.3,
-            "valueField": "Presentes"
+          "balloonText": "Presentes: [[value]]",
+          "fillAlphas": 0.9,
+          "lineAlpha": 0.2,
+          "title": "Presentes",
+          "type": "column",
+          "clustered": false,
+          "columnWidth": 0.3,
+          "valueField": "Presentes"
         }, {
-            "balloonText": "Ausentes: [[value]]",
-            "fillAlphas": 0.9,
-            "lineAlpha": 0.2,
-            "title": "Ausentes",
-            "type": "column",
-            "clustered":false,
-            "columnWidth":0.4,
-            "valueField": "Ausentes"
+          "balloonText": "Ausentes: [[value]]",
+          "fillAlphas": 0.9,
+          "lineAlpha": 0.2,
+          "title": "Ausentes",
+          "type": "column",
+          "clustered": false,
+          "columnWidth": 0.4,
+          "valueField": "Ausentes"
         }, {
           "balloonText": "Eliminados: [[value]]",
           "fillAlphas": 0.9,
           "lineAlpha": 0.2,
           "title": "Eliminados",
           "type": "column",
-          "clustered":false,
-          "columnWidth":0.5,
+          "clustered": false,
+          "columnWidth": 0.5,
           "valueField": "Eliminados"
         }],
         "plotAreaFillAlphas": 0.1,
         "categoryField": "Dia",
         "categoryAxis": {
-            "gridPosition": "start"
+          "gridPosition": "start"
         },
-        "legend":{
-          "position":"right",
-          "autoMargins":true
+        "legend": {
+          "position": "right",
+          "autoMargins": true
         },
         "export": {
           "enabled": true
@@ -363,19 +387,21 @@ $('#numberByPresenceChart').click(function() {
   });
 });
 
-$('#performanceByGenreChart').click(function() {
+$('#performanceByGenreChart').click(function () {
   showLoading($(this).html());
   $.ajax({
-    type:"POST",
+    type: "POST",
     url: 'performancebygenre',
     dataType: 'json',
-    data: { 'place': Cookies.get('place') },
+    data: {
+      'place': Cookies.get('place')
+    },
     success: function (data) {
       showChart();
       dataProvider = [];
       values = {};
       values["Tipo"] = "Ciências Humanas"
-      $.each(data.content.result, function(index, value) {
+      $.each(data.content.result, function (index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_CH;
         } else {
@@ -385,7 +411,7 @@ $('#performanceByGenreChart').click(function() {
       dataProvider.push(values);
       values = {};
       values["Tipo"] = "Ciências da Natureza"
-      $.each(data.content.result, function(index, value) {
+      $.each(data.content.result, function (index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_CN;
         } else {
@@ -395,7 +421,7 @@ $('#performanceByGenreChart').click(function() {
       dataProvider.push(values);
       values = {};
       values["Tipo"] = "Linguagens e Códigos"
-      $.each(data.content.result, function(index, value) {
+      $.each(data.content.result, function (index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_LC;
         } else {
@@ -405,7 +431,7 @@ $('#performanceByGenreChart').click(function() {
       dataProvider.push(values);
       values = {};
       values["Tipo"] = "Matemática"
-      $.each(data.content.result, function(index, value) {
+      $.each(data.content.result, function (index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_MT;
         } else {
@@ -415,7 +441,7 @@ $('#performanceByGenreChart').click(function() {
       dataProvider.push(values);
       values = {};
       values["Tipo"] = "Redação"
-      $.each(data.content.result, function(index, value) {
+      $.each(data.content.result, function (index, value) {
         if (value.genre == "F") {
           values["Feminino"] = value.media_NOTA_REDACAO;
         } else {
@@ -432,18 +458,19 @@ $('#performanceByGenreChart').click(function() {
           "maximum": 1000,
           "minimum": 0
         }],
-        "graphs": [ {
-          "balloonText": "Feminino: [[value]]",
-          "bullet": "round",
-          "lineThickness": 2,
-          "valueField": "Feminino"
-        },
-        {
-          "balloonText": "Masculino: [[value]]",
-          "bullet": "round",
-          "lineThickness": 2,
-          "valueField": "Masculino"
-        }],
+        "graphs": [{
+            "balloonText": "Feminino: [[value]]",
+            "bullet": "round",
+            "lineThickness": 2,
+            "valueField": "Feminino"
+          },
+          {
+            "balloonText": "Masculino: [[value]]",
+            "bullet": "round",
+            "lineThickness": 2,
+            "valueField": "Masculino"
+          }
+        ],
         "categoryField": "Tipo",
         "export": {
           "enabled": true
@@ -453,13 +480,15 @@ $('#performanceByGenreChart').click(function() {
   });
 });
 
-$('#performanceBySchoolChart').click(function() {
+$('#performanceBySchoolChart').click(function () {
   showLoading($(this).html());
   $.ajax({
     type: "POST",
     url: 'performancebyschool',
     dataType: 'json',
-    data: { 'place': Cookies.get('place') },
+    data: {
+      'place': Cookies.get('place')
+    },
     success: function (data) {
       showChart();
       AmCharts.makeChart("chart-area", {
@@ -472,9 +501,9 @@ $('#performanceBySchoolChart').click(function() {
         "radius": "42%",
         "innerRadius": "60%",
         "labelText": "[[escola]]",
-        "legend":{
-          "position":"right",
-          "autoMargins":true
+        "legend": {
+          "position": "right",
+          "autoMargins": true
         },
         "export": {
           "enabled": true
@@ -484,7 +513,7 @@ $('#performanceBySchoolChart').click(function() {
   });
 });
 
-$('#performanceByEstadosChart').click(function() {
+$('#performanceByEstadosChart').click(function () {
   showLoading($(this).html());
   place = Cookies.get('place');
   $.ajax({
@@ -556,52 +585,54 @@ $('#performanceByEstadosChart').click(function() {
   });
 });
 
-$('#situacaoEnsinoMedio').click(function() {
+$('#situacaoEnsinoMedio').click(function () {
   showLoading($(this).html());
   console.log("Antes da chamada do ajax");
   $.ajax({
-    type:"POST",
+    type: "POST",
     url: 'situacaoensinomedio',
     dataType: 'json',
-    data: { 'place': Cookies.get('place') },
+    data: {
+      'place': Cookies.get('place')
+    },
 
-    success: function(data){
+    success: function (data) {
       showChart();
       console.log("Definindo o gráfico :D");
       console.log(data["content"]);
-      AmCharts.makeChart( "chart-area", {
+      AmCharts.makeChart("chart-area", {
         "type": "pie",
         "theme": "light",
         "dataProvider": data.content,
         "titleField": "title",
         "valueField": "value",
         "labelRadius": 5,
-      
+
         "radius": "42%",
         "innerRadius": "60%",
         "labelText": "[[title]]",
-        "legend":{
-          "position":"right",
-          "autoMargins":true
+        "legend": {
+          "position": "right",
+          "autoMargins": true
         },
         "export": {
           "enabled": true
         }
       });
     },
-    error: function(){
+    error: function () {
       console.log("Deu ruim man");
     },
-    complete: function(){
+    complete: function () {
       console.log("Completou man");
     }
   })
 });
 
-$('#performanceByEtinicoChart').click(function(){
+$('#performanceByEtinicoChart').click(function () {
   showLoading($(this).html());
   $.ajax({
-    type:"POST",
+    type: "POST",
     url: 'performancebyetinico',
     dataType: 'json',
     data: { 'place': Cookies.get('place') },
@@ -633,6 +664,7 @@ $('#performanceByEtinicoChart').click(function(){
   });
 });
 
+<<<<<<< HEAD
 $('#cornumeroChart').click(function(){
   showLoading($(this).html());
   $.ajax({
@@ -660,24 +692,106 @@ $('#cornumeroChart').click(function(){
         "legend":{
           "position":"right",
           "autoMargins":true
+=======
+// $('#cornumeroChart').click(function(){
+//   showLoading($(this).html());
+//   $.ajax({
+//     type:"POST",
+//     url: 'cornumero',
+//     dataType: 'json',
+//     data: { 'place': Cookies.get('place') },
+
+$('#numberByIncomeChart').click(function () {
+  showLoading($(this).html());
+  $.ajax({
+    type: 'POST',
+    url: 'numberbyincome',
+    dataType: 'json',
+    data: {
+      'place': Cookies.get('place')
+    },
+    success: function (data) {
+      console.log("Sucesso");
+      showChart();
+
+      AmCharts.makeChart("chart-area", {
+        "type": "serial",
+        "theme": "none",
+        "legend": {
+          "horizontalGap": 10,
+          "maxColumns": 1,
+          "position": "right",
+          "useGraphSettings": true,
+          "markerSize": 10
+        },
+        "dataProvider": data.content,
+        "valueAxes": [{
+          "stackType": "regular",
+          "axisAlpha": 0.3,
+          "gridAlpha": 0
+        }],
+        "graphs": [{
+          "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+          "fillAlphas": 0.8,
+          "labelText": "[[value]]",
+          "lineAlpha": 0.3,
+          "title": "Masculino",
+          "type": "column",
+          "color": "#000000",
+          "valueField": "Masculino"
+        }, {
+          "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+          "fillAlphas": 0.8,
+          "labelText": "[[value]]",
+          "lineAlpha": 0.3,
+          "title": "Feminino",
+          "type": "column",
+          "color": "#000000",
+          "valueField": "Feminino"
+        }],
+        "categoryField": "Classe",
+        "categoryAxis": {
+          "gridPosition": "start",
+          "axisAlpha": 0,
+          "gridAlpha": 0,
+          "position": "left",
+          "labelRotation": 30
+>>>>>>> bace8f56902fc33bb66be13da092dd67d833d339
         },
         "export": {
           "enabled": true
         }
+<<<<<<< HEAD
       });
+=======
+>>>>>>> bace8f56902fc33bb66be13da092dd67d833d339
 
+      });
+    },
+    error: function (data) {
+      console.log("Deu erro");
+    },
+    complete: function (data) {
+      console.log('completou requisição');
 
+    }
+  });
+});
 
+<<<<<<< HEAD
 
     }
   });
 });
 $(document).ready(function () {  
+=======
+$(document).ready(function () {
+>>>>>>> bace8f56902fc33bb66be13da092dd67d833d339
   if (Cookies.get('place') == undefined) {
     Cookies.set('place', 'BR');
   }
   $("#place").html(Cookies.get('place'));
   $('#sidebarCollapse').on('click', function () {
-      $('#sidebar').toggleClass('active');
+    $('#sidebar').toggleClass('active');
   });
 });

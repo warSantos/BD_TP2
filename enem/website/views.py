@@ -370,7 +370,7 @@ def datacornumeroView(request):
             '5': "Indigena"
         }
         place = request.POST.get('place')
-        query_objects = {}
+        
         if (place != "BR"):
             query_objects = Participant.objects.filter(SG_UF_PROVA=place).values('TP_COR_RACA').annotate(COUNT = Count('TP_COR_RACA')).order_by('TP_COR_RACA')
         else:
