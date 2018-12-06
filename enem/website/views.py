@@ -418,7 +418,7 @@ def dataPerformanceByInternetView(request):
                 SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
                 SUM_NU_NOTA_MT = Sum('NU_NOTA_MT'),
                 SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
-                ).order_by('Q025')
+            ).order_by('Q025')
         else:
             query_objects['Q025'] = Participant.objects.values('Q025').annotate(COUNT = Count('Q025')).order_by('Q025')
             query_objects['NU_NOTA'] = Participant.objects.values('Q025').annotate(
@@ -434,6 +434,63 @@ def dataPerformanceByInternetView(request):
                 if (obj['Q025'] == obj_sum['Q025']):
                     participants.append({
                         "title": obj['Q025'],
+                        "nota": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
+                    })
+        data = {
+            'result': participants
+        }
+        return data
+
+@ajax
+@csrf_exempt
+def dataPerformanceByIncomeView(request):
+    if (request.method == 'POST'):
+        titles = {
+            'A': 'Nenhuma renda.',
+            'B': 'Até R$ 937,00.',
+            'C': 'De R$ 937,01 até R$ 1.405,50.',
+            'D': 'De R$ 1.405,51 até R$ 1.874,00.',
+            'E': 'De R$ 1.874,01 até R$ 2.342,50.',
+            'F': 'De R$ 2.342,51 até R$ 2.811,00.',
+            'G': 'De R$ 2.811,01 até R$ 3.748,00.',
+            'H': 'De R$ 3.748,01 até R$ 4.685,00.',
+            'I': 'De R$ 4.685,01 até R$ 5.622,00.',
+            'J': 'De R$ 5.622,01 até R$ 6.559,00.',
+            'K': 'De R$ 6.559,01 até R$ 7.496,00.',
+            'L': 'De R$ 7.496,01 até R$ 8.433,00.',
+            'M': 'De R$ 8.433,01 até R$ 9.370,00.',
+            'N': 'De R$ 9.370,01 até R$ 11.244,00.',
+            'O': 'De R$ 11.244,01 até R$ 14.055,00.',
+            'P': 'De R$ 14.055,01 até R$ 18.740,00.',
+            'Q': 'Mais de R$ 18.740,00.'
+        }
+        place = request.POST.get('place')
+        data = []
+        query_objects = {}
+        if (place != "BR"):
+            query_objects['Q006'] = Participant.objects.filter(SG_UF_PROVA=place).values("Q006").annotate(COUNT=Count("Q006"))
+            query_objects['NU_NOTA'] = Participant.objects.filter(SG_UF_PROVA=place).values('Q006').annotate(
+                SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
+                SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
+                SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
+                SUM_NU_NOTA_MT = Sum('NU_NOTA_MT'),
+                SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
+            ).order_by('Q006')
+        else:
+            query_objects['Q006'] = Participant.objects.values("Q006").annotate(COUNT=Count("Q006"))
+            query_objects['NU_NOTA'] = Participant.objects.values('Q006').annotate(
+                SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
+                SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
+                SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
+                SUM_NU_NOTA_MT = Sum('NU_NOTA_MT'),
+                SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
+            ).order_by('Q006')          
+        participants = []
+        for obj in query_objects['Q006']:
+            for obj_sum in query_objects['NU_NOTA']:
+                if (obj['Q006'] == obj_sum['Q006']):
+                    participants.append({
+                        "title": titles[obj['Q006']],
                         "nota": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
                     })
         data = {

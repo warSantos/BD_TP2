@@ -785,6 +785,60 @@ $('#numberByIncomeChart').click(function () {
   });
 });
 
+$('#performanceByIncomeChart').click(function () {
+  showLoading($(this).html());
+  $.ajax({
+    type: 'POST',
+    url: 'performancebyincome',
+    dataType: 'json',
+    data: {
+      'place': Cookies.get('place')
+    },
+    success: function (data) {
+      console.log(data);
+      showChart();
+      AmCharts.makeChart("chart-area", {
+        "type": "serial",
+        "theme": "light",
+        "legend": {
+          "horizontalGap": 10,
+          "maxColumns": 1,
+          "position": "right",
+          "useGraphSettings": true,
+          "markerSize": 10
+        },
+        "dataProvider": data.content.result,
+        "valueAxes": [{
+          "stackType": "regular",
+          "axisAlpha": 0.3,
+          "gridAlpha": 0
+        }],
+        "graphs": [{
+          "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+          "fillAlphas": 0.8,
+          "labelText": "[[value]]",
+          "lineAlpha": 0.3,
+          "title": "Nota",
+          "type": "column",
+          "color": "#000000",
+          "valueField": "nota"
+        }],
+        "categoryField": "title",
+        "categoryAxis": {
+          "gridPosition": "start",
+          "axisAlpha": 0,
+          "gridAlpha": 0,
+          "position": "left",
+          "labelRotation": 30
+        },
+        "export": {
+          "enabled": true
+        }
+      });
+    }
+  });
+});
+
 $('#cornumeroChart').click(function(){
   showLoading($(this).html());
   $.ajax({
@@ -800,7 +854,7 @@ $('#cornumeroChart').click(function(){
         "theme": "light",
         "dataProvider":data.content.result, 
         "valueField":"value",
-        "titleField": "cor",
+        "titleField": "title",
         "startEffect": "elastic",
         "startDuration": 2,
         "labelRadius": 15,
