@@ -486,13 +486,16 @@ def dataPerformanceByIncomeView(request):
                 SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
             ).order_by('Q006')          
         participants = []
-        for obj in query_objects['Q006']:
-            for obj_sum in query_objects['NU_NOTA']:
-                if (obj['Q006'] == obj_sum['Q006']):
-                    participants.append({
-                        "title": titles[obj['Q006']],
-                        "nota": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
-                    })
+
+        for i in titles:
+            for obj in query_objects['Q006']:
+                if (i == obj['Q006']):
+                    for obj_sum in query_objects['NU_NOTA']:
+                        if (obj['Q006'] == obj_sum['Q006']):
+                            participants.append({
+                                "title": titles[obj['Q006']],
+                                "nota": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
+                            })
         data = {
             'result': participants
         }
