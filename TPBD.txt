@@ -1,0 +1,79 @@
+
+NU_IDADE	Idade2
+
+##########################################################################################################################################################		
+TP_SEXO	Sexo	M	Masculino	
+				F	Feminino 		
+##########################################################################################################################################################
+TP_COR_RACA	Cor/raça	0	Não declarado	
+						1	Branca		
+						2	Preta		
+						3	Parda		
+						4	Amarela		
+						5	Indígena 		
+##########################################################################################################################################################
+TP_ST_CONCLUSAO	Situação de conclusão do Ensino Médio	1	Já concluí o Ensino Médio
+														2	Estou cursando e concluirei o Ensino Médio em 2017
+														3	Estou cursando e concluirei o Ensino Médio após 2017
+														4	Não concluí e não estou cursando o Ensino Médio
+														
+##########################################################################################################################################################		
+
+TP_ESCOLA	Tipo de escola do Ensino Médio	1	Não Respondeu
+											2	Pública
+											3	Privada
+											4	Exterior
+
+##########################################################################################################################################################											
+
+SG_UF_PROVA	Sigla da Unidade da Federação da aplicação da prova
+
+##########################################################################################################################################################
+TP_PRESENCA_CN	Presença na prova objetiva de Ciências da Natureza	0	Faltou à prova
+																	1	Presente na prova
+																	2	Eliminado na prova
+																	
+TP_PRESENCA_CH	Presença na prova objetiva de Ciências Humanas		0	Faltou à prova
+																	1	Presente na prova
+																	2	Eliminado na prova
+																	
+TP_PRESENCA_LC	Presença na prova objetiva de Linguagens e Códigos	0	Faltou à prova
+																	1	Presente na prova
+																	2	Eliminado na prova
+																	
+TP_PRESENCA_MT	Presença na prova objetiva de Matemática			0	Faltou à prova
+																	1	Presente na prova
+																	2	Eliminado na prova
+																	
+##########################################################################################################################################################
+					
+Q025	Na sua residência tem acesso à Internet?					A	Não.
+																	B	Sim.
+
+##########################################################################################################################################################
+
+Q026	Você já concluiu ou está concluindo o Ensino Médio?			A	Já concluí o Ensino Médio.
+																	B	Estou cursando e concluirei o Ensino Médio EM 2017.
+																	C	Estou cursando e concluirei o Ensino Médio APÓS 2017.
+																	D	Não concluí e não estou cursando o Ensino Médio.
+
+##########################################################################################################################################################					
+																	
+Q006	Qual é a renda mensal de sua família? (Some a sua renda com a dos seus familiares.)		A	Nenhuma renda.
+																								B	Até R$ 937,00.
+																								C	De R$ 937,01 até R$ 1.405,50.
+																								D	De R$ 1.405,51 até R$ 1.874,00.
+																								E	De R$ 1.874,01 até R$ 2.342,50.
+																								F	De R$ 2.342,51 até R$ 2.811,00.
+																								G	De R$ 2.811,01 até R$ 3.748,00.
+																								H	De R$ 3.748,01 até R$ 4.685,00.
+																								I	De R$ 4.685,01 até R$ 5.622,00.
+																								J	De R$ 5.622,01 até R$ 6.559,00.
+																								K	De R$ 6.559,01 até R$ 7.496,00.
+																								L	De R$ 7.496,01 até R$ 8.433,00.
+																								M	De R$ 8.433,01 até R$ 9.370,00.
+																								N	De R$ 9.370,01 até R$ 11.244,00.
+																								O	De R$ 11.244,01 até R$ 14.055,00.
+																								P	De R$ 14.055,01 até R$ 18.740,00.
+																								Q	Mais de R$ 18.740,00.
+##########################################################################################################################################################																								
