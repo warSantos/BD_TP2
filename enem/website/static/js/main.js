@@ -44,7 +44,7 @@ $('#confButton').click(function() {
   } );
 });
 
-$('#numberByGenreChart').click(function() {    
+$('#numberByGenreChart').click(function() {
   showLoading($(this).html());
   $.ajax({
     type: "POST",
@@ -297,10 +297,11 @@ $('#numberByInternetChart').click(function() {
 $('#numberByPresenceChart').click(function() {
   showLoading($(this).html());
   $.ajax({
+    type: "POST",
     url: 'numberbypresence',
     dataType: 'json',
+    data: { 'place': Cookies.get('place') },
     success: function (data) {
-      console.log(data.content.result);
       showChart();
       AmCharts.makeChart("chart-area", {
         "theme": "light",
@@ -481,8 +482,8 @@ $('#performanceByEstadosChart').click(function() {
     dataType: 'json',
     success: function(data){
       showChart();
-      var chart = AmCharts.makeChart("chart-area", {
-        "theme": "none",
+      AmCharts.makeChart("chart-area", {
+        "theme": "light",
         "type": "serial",
         "startDuration": 2,
         "dataProvider":data.content.result,
@@ -535,7 +536,7 @@ $('#situacaoEnsinoMedio').click(function() {
       console.log(data["content"]);
       AmCharts.makeChart( "chart-area", {
         "type": "pie",
-        "theme": "none",
+        "theme": "light",
         "dataProvider": data.content,
         "titleField": "title",
         "valueField": "value",
@@ -572,36 +573,12 @@ $('#performanceByEtinicoChart').click(function(){
     success: function(data){
       console.log(data);
       showChart();
-      dataProvider=[];
-      values  = {};
-      
-       $.each(data.content.result, function(index, value) {
-        if(value.cor== "0"){
-          values["Nao_declarado"] = value.media;
-        }else if(value.cor=="1") {
-          values["Branca"] = value.media;
-        }else if(value.cor== "2"){
-          values["Preta"] = value.media;
-        }else if(value.cor== "3"){
-          values["Parda"]=value.media;
-        }else if(value.cor == "4"){
-          values["Amarela"]=value.media;
-        }else if(value.cor == "5" ){
-          values["Indigena"]=value.media;
-        }
-      });
-      dataProvider.push(values);
-      console.log(dataProvider)
-      var chart = AmCharts.makeChart("chart-area", {
-        "type": "pie",
-        "theme": "none",
-        "titles": [ {
-          "text": "Visitors countries",
-          "size": 16
-        } ],
-        "dataProvider":dataProvider, 
-        "valueField":"Branco",
-        "titleField": "",
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",  
+        "theme": "light",
+        "dataProvider":data.content.result, 
+        "valueField":"media",
+        "titleField": "cor",
         "startEffect": "elastic",
         "startDuration": 2,
         "labelRadius": 15,
@@ -610,10 +587,14 @@ $('#performanceByEtinicoChart').click(function(){
         "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
         "angle": 15,
         "categoryField": "Tipo",
+        "legend":{
+          "position":"right",
+          "autoMargins":true
+        },
         "export": {
           "enabled": true
         }
-      } );
+      });
     }
   });
 });

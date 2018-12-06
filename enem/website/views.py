@@ -52,13 +52,13 @@ def dataNumberByAgeView(request):
 @ajax
 @csrf_exempt
 def dataNumberBySchoolView(request):
-    titles = {
-        '1': "Não Respondeu",
-        '2': "Pública",
-        '3': "Privada",
-        '4': "Exterior"
-    }
     if (request.method == 'POST'):
+        titles = {
+            '1': "Não Respondeu",
+            '2': "Pública",
+            '3': "Privada",
+            '4': "Exterior"
+        }
         place = request.POST.get('place')
         if (place != "BR"):
             query_objects = Participant.objects.filter(SG_UF_PROVA=place).values('TP_ESCOLA').annotate(COUNT = Count('TP_ESCOLA')).order_by('TP_ESCOLA')
@@ -101,35 +101,42 @@ def dataNumberByInternetView(request):
         return data
 
 @ajax
+@csrf_exempt
 def dataNumberByPresenceView(request):
-    query_objects = {}
-    query_objects['DIA1'] = Participant.objects.values('TP_PRESENCA_CH').annotate(COUNT = Count('TP_PRESENCA_CH'))
-    query_objects['DIA2'] = Participant.objects.values('TP_PRESENCA_CN').annotate(COUNT = Count('TP_PRESENCA_CN'))
-    participants = []
-    participants_data = {}
-    participants_data['Dia'] = "Dia 1"
-    for obj in query_objects['DIA1']:
-        if (obj['TP_PRESENCA_CH'] == "0"):
-            participants_data['Ausentes'] = obj['COUNT']
-        elif (obj['TP_PRESENCA_CH'] == "1"):
-            participants_data['Presentes'] = obj['COUNT']
-        elif (obj['TP_PRESENCA_CH'] == "2"):
-            participants_data['Eliminados'] = obj['COUNT']
-    participants.append(participants_data)
-    participants_data = {}
-    participants_data['Dia'] = "Dia 2"
-    for obj in query_objects['DIA2']:
-        if (obj['TP_PRESENCA_CN'] == "0"):
-            participants_data['Ausentes'] = obj['COUNT']
-        elif (obj['TP_PRESENCA_CN'] == "1"):
-            participants_data['Presentes'] = obj['COUNT']
-        elif (obj['TP_PRESENCA_CN'] == "2"):
-            participants_data['Eliminados'] = obj['COUNT']
-    participants.append(participants_data)
-    data = {
-      'result': participants
-    }
-    return data
+    if (request.method == 'POST'):
+        query_objects = {}
+        place = request.POST.get('place')
+        if(place != "BR"):
+            query_objects['DIA1'] = Participant.objects.filter(SG_UF_PROVA=place).values('TP_PRESENCA_CH').annotate(COUNT = Count('TP_PRESENCA_CH'))
+            query_objects['DIA2'] = Participant.objects.filter(SG_UF_PROVA=place).values('TP_PRESENCA_CN').annotate(COUNT = Count('TP_PRESENCA_CN'))
+        else:
+            query_objects['DIA1'] = Participant.objects.values('TP_PRESENCA_CH').annotate(COUNT = Count('TP_PRESENCA_CH'))
+            query_objects['DIA2'] = Participant.objects.values('TP_PRESENCA_CN').annotate(COUNT = Count('TP_PRESENCA_CN'))
+        participants = []
+        participants_data = {}
+        participants_data['Dia'] = "Dia 1"
+        for obj in query_objects['DIA1']:
+            if (obj['TP_PRESENCA_CH'] == "0"):
+                participants_data['Ausentes'] = obj['COUNT']
+            elif (obj['TP_PRESENCA_CH'] == "1"):
+                participants_data['Presentes'] = obj['COUNT']
+            elif (obj['TP_PRESENCA_CH'] == "2"):
+                participants_data['Eliminados'] = obj['COUNT']
+        participants.append(participants_data)
+        participants_data = {}
+        participants_data['Dia'] = "Dia 2"
+        for obj in query_objects['DIA2']:
+            if (obj['TP_PRESENCA_CN'] == "0"):
+                participants_data['Ausentes'] = obj['COUNT']
+            elif (obj['TP_PRESENCA_CN'] == "1"):
+                participants_data['Presentes'] = obj['COUNT']
+            elif (obj['TP_PRESENCA_CN'] == "2"):
+                participants_data['Eliminados'] = obj['COUNT']
+        participants.append(participants_data)
+        data = {
+        'result': participants
+        }
+        return data
 
 @ajax
 @csrf_exempt
@@ -190,13 +197,13 @@ def dataPerformanceByGenreView(request):
 @ajax
 @csrf_exempt
 def dataPerformanceBySchoolView(request):
-    titles = {
-        '1': "Não Respondeu",
-        '2': "Pública",
-        '3': "Privada",
-        '4': "Exterior"
-    }
     if (request.method == 'POST'):
+        titles = {
+            '1': "Não Respondeu",
+            '2': "Pública",
+            '3': "Privada",
+            '4': "Exterior"
+        }
         place = request.POST.get('place')
         query_objects = {}
         if (place != "BR"):
@@ -259,13 +266,13 @@ def dataperformanceByEstadosView(request):
 @ajax
 @csrf_exempt
 def dataSituacaoEnsinoMedioView(request):
-    titles = {
-        '1': "Já concluí",
-        '2': "Estou cursando e concluirei em 2017",
-        '3': "Estou cursando e concluirei após 2017",
-        '4': "Não concluí e não estou cursando"
-    }
-    if(request.method== 'POST'):
+    if (request.method == 'POST'):
+        titles = {
+            '1': "Já concluí",
+            '2': "Estou cursando e concluirei em 2017",
+            '3': "Estou cursando e concluirei após 2017",
+            '4': "Não concluí e não estou cursando"
+        }
         place= request.POST.get('place')
         if(place != "BR"):
             query_entry = Participant.objects.filter(SG_UF_PROVA=place).values("TP_ST_CONCLUSAO").annotate(entries=Count("TP_ST_CONCLUSAO"))
@@ -284,7 +291,15 @@ def dataSituacaoEnsinoMedioView(request):
 @ajax
 @csrf_exempt
 def dataperformanceByEtinicoView(request):
-    if(request.method == 'POST'):
+    if (request.method == 'POST'):
+        titles = {
+            '0': "Nao_declarado",
+            '1': "Branca",
+            '2': "Preta",
+            '3': "Parda",
+            '4': "Amarela",
+            '5': "Indigena"
+        }
         place = request.POST.get('place')
         query_objects = {}
         if(place != "BR"):
@@ -296,15 +311,6 @@ def dataperformanceByEtinicoView(request):
                 SUM_NU_NOTA_MT = Sum('NU_NOTA_MT'),
                 SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
                 ).order_by('TP_COR_RACA')
-            participants = []
-            for obj in query_objects['TP_COR_RACA']:
-                for obj_sum in query_objects['NU_NOTA']:
-                    if (obj['TP_COR_RACA'] == obj_sum['TP_COR_RACA']):
-                        participants.append({
-                            "cor": obj['TP_COR_RACA'],
-                            "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
-                        })
-                        break
         else:
             query_objects['TP_COR_RACA'] = Participant.objects.values('TP_COR_RACA').annotate(COUNT = Count('TP_COR_RACA')).order_by('TP_COR_RACA')
             query_objects['NU_NOTA'] = Participant.objects.values('TP_COR_RACA').annotate(
@@ -314,17 +320,17 @@ def dataperformanceByEtinicoView(request):
                 SUM_NU_NOTA_MT = Sum('NU_NOTA_MT'),
                 SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
             ).order_by('TP_COR_RACA')
-            participants = []
-            for obj in query_objects['TP_COR_RACA']:
-                for obj_sum in query_objects['NU_NOTA']:
-                    if (obj['TP_COR_RACA'] == obj_sum['TP_COR_RACA']):
-                        participants.append({
-                            "cor": obj['TP_COR_RACA'],
-                            "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
-                        })
-                        break
+        participants = []
+        for obj in query_objects['TP_COR_RACA']:
+            for obj_sum in query_objects['NU_NOTA']:
+                if (obj['TP_COR_RACA'] == obj_sum['TP_COR_RACA']):
+                    participants.append({
+                        "cor": titles[obj['TP_COR_RACA']],
+                        "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
+                    })
+                    break
         data = {
-        'result': participants
+            'result': participants
         }
         return data
 
