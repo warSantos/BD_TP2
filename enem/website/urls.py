@@ -14,5 +14,6 @@ urlpatterns = [
     path('performancebyschool', views.dataPerformanceBySchoolView, name='dataPerformanceBySchoolView'),
     path('performancebyestados',views.dataperformanceByEstadosView, name='dataPerformanceByEstadosView'),
     path('situacaoensinomedio',views.dataSituacaoEnsinoMedioView, name='dataSituacaoEnsinoMedioView'),
-    path('performancebyetinico',views.dataperformanceByEtinicoView, name='dataperformanceByEtinicoView')
+    path('performancebyetinico',views.dataperformanceByEtinicoView, name='dataperformanceByEtinicoView'),
+    path('cornumero',views.datacornumeroView,name='datacornumeroView')
 ]

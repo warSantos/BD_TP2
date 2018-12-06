@@ -357,20 +357,31 @@ def dataperformanceByEtinicoView(request):
         return data
 
 
-# @ajax
-# @csrf_exempt
-# def cornumeroView(request):
-#     if (request.method == 'POST'):
-#       titles = {
-#             '0': "Nao_declarado",
-#             '1': "Branca",
-#             '2': "Preta",
-#             '3': "Parda",
-#             '4': "Amarela",
-#             '5': "Indigena"
-#         }
-#         place = request.POST.get('place')
-#         query_objects = {}
+@ajax
+@csrf_exempt
+def datacornumeroView(request):
+    if (request.method == 'POST'):
+        titles = {
+            '0': 'Nao_declarado',
+            '1': "Branca",
+            '2': "Preta",
+            '3': "Parda",
+            '4': "Amarela",
+            '5': "Indigena"
+        }
+        place = request.POST.get('place')
+        query_objects = {}
+        if (place != "BR"):
+            query_objects = Participant.objects.filter(SG_UF_PROVA=place).values('TP_COR_RACA').annotate(COUNT = Count('TP_COR_RACA')).order_by('TP_COR_RACA')
+        else:
+            query_objects = Participant.objects.values('TP_COR_RACA').annotate(COUNT = Count('TP_COR_RACA')).order_by('TP_COR_RACA')
+        result = []
+        for obj in query_objects:
+            result.append({"title": titles[obj["TP_COR_RACA"]], "value": obj['COUNT']})
+        data = {
+            'result': result
+        }
+        return data
 
 
 def index(request):

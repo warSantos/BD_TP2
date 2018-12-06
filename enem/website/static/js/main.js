@@ -633,20 +633,45 @@ $('#performanceByEtinicoChart').click(function(){
   });
 });
 
-// $('#cornumeroChart').click(function(){
-//   showLoading($(this).html());
-//   $.ajax({
-//     type:"POST",
-//     url: 'cornumero',
-//     dataType: 'json',
-//     data: { 'place': Cookies.get('place') },
+$('#cornumeroChart').click(function(){
+  showLoading($(this).html());
+  $.ajax({
+    type:"POST",
+    url: 'cornumero',
+    dataType: 'json',
+    data: { 'place': Cookies.get('place') },
+    success: function(data){
+      showChart();
+      console.log(data);
+      AmCharts.makeChart("chart-area", {
+        "type": "pie",  
+        "theme": "light",
+        "dataProvider":data.content.result, 
+        "valueField":"value",
+        "titleField": "cor",
+        "startEffect": "elastic",
+        "startDuration": 2,
+        "labelRadius": 15,
+        "innerRadius": "50%",
+        "depth3D": 10,
+        "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+        "angle": 15,
+        "categoryField": "Tipo",
+        "legend":{
+          "position":"right",
+          "autoMargins":true
+        },
+        "export": {
+          "enabled": true
+        }
+      });
 
 
 
 
-
-
-// });
+    }
+  });
+});
 $(document).ready(function () {  
   if (Cookies.get('place') == undefined) {
     Cookies.set('place', 'BR');
