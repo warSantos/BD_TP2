@@ -140,6 +140,54 @@ def dataNumberByPresenceView(request):
 
 @ajax
 @csrf_exempt
+def dataNumberByIncomeView(request):
+    titles={
+        'A': 'Nenhuma renda.',
+        'B': 'Até R$ 937,00.',
+        'C': 'De R$ 937,01 até R$ 1.405,50.',
+        'D': 'De R$ 1.405,51 até R$ 1.874,00.',
+        'E': 'De R$ 1.874,01 até R$ 2.342,50.',
+        'F': 'De R$ 2.342,51 até R$ 2.811,00.',
+        'G': 'De R$ 2.811,01 até R$ 3.748,00.',
+        'H': 'De R$ 3.748,01 até R$ 4.685,00.',
+        'I': 'De R$ 4.685,01 até R$ 5.622,00.',
+        'J': 'De R$ 5.622,01 até R$ 6.559,00.',
+        'K': 'De R$ 6.559,01 até R$ 7.496,00.',
+        'L': 'De R$ 7.496,01 até R$ 8.433,00.',
+        'M': 'De R$ 8.433,01 até R$ 9.370,00.',
+        'N': 'De R$ 9.370,01 até R$ 11.244,00.',
+        'O': 'De R$ 11.244,01 até R$ 14.055,00.',
+        'P': 'De R$ 14.055,01 até R$ 18.740,00.',
+        'Q': 'Mais de R$ 18.740,00.'
+    }
+
+    if(request.method== 'POST'):
+        place= request.POST.get('place')
+        data = []
+        query_entry = []
+        if(place != "BR"):
+            query_entry = Participant.objects.filter(SG_UF_PROVA=place).values("Q006","TP_SEXO").\
+                    annotate(entries=Count("Q006","TP_SEXO"))
+        else:
+            query_entry = Participant.objects.values("Q006","TP_SEXO").\
+                    annotate(entries=Count("Q006","TP_SEXO"))
+                    
+        for i in titles:
+            elem_class = [x for x in query_entry if x["Q006"] == i]
+            masc = [x for x in elem_class if x['TP_SEXO'] == 'M']
+            femi = [x for x in elem_class if x['TP_SEXO'] == 'F']
+                 
+            data.append({
+                'Classe': titles[i], 
+                'Masculino': 0 if not masc else masc[0]['entries'],
+                'Feminino': 0 if not femi else femi[0]['entries']
+            })
+
+        return data
+
+
+@ajax
+@csrf_exempt
 def dataPerformanceByGenreView(request):
     if(request.method == 'POST'):
         place = request.POST.get('place')

@@ -11,6 +11,7 @@ urlpatterns = [
     path('numberbylanguage', views.dataNumberByLanguageView, name='dataNumberByLanguageView'),
     path('numberbyinternet', views.dataNumberByInternetView, name='dataNumberByInternetView'),
     path('numberbypresence', views.dataNumberByPresenceView, name='dataNumberByPresenceView'),
+    path('numberbyincome',views.dataNumberByIncomeView, name='dataNumberByIncomeView'),
     path('performancebygenre', views.dataPerformanceByGenreView, name='dataPerformanceByGenreView'),
     path('performancebyschool', views.dataPerformanceBySchoolView, name='dataPerformanceBySchoolView'),
     path('performancebyestados', views.dataperformanceByEstadosView, name='dataPerformanceByEstadosView'),
