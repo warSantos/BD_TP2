@@ -239,29 +239,51 @@ def dataPerformanceBySchoolView(request):
         return data
 
 @ajax
+@csrf_exempt
 def dataperformanceByEstadosView(request):
-    query_objects = {}
-    query_objects['SG_UF_PROVA'] = Participant.objects.values('SG_UF_PROVA').annotate(COUNT = Count('SG_UF_PROVA')).order_by('SG_UF_PROVA')
-    query_objects['NU_NOTA'] = Participant.objects.values('SG_UF_PROVA').annotate(
-        SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
-        SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
-        SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
-        SUM_NU_NOTA_MT = Sum('NU_NOTA_MT'),
-        SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
-    ).order_by('SG_UF_PROVA')
-    participants = []
-    for obj in query_objects['SG_UF_PROVA']:
-        for obj_sum in query_objects['NU_NOTA']:
-            if (obj['SG_UF_PROVA'] == obj_sum['SG_UF_PROVA']):
-                participants.append({
-                    "estado": obj['SG_UF_PROVA'],
-                    "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
-                })
-                break
-    data = {
-      'result': participants
-    }
-    return data
+    if (request.method == 'POST'):
+        place = request.POST.get('place')
+        query_objects = {}
+        participants = []
+        if (place != "BR"):
+            query_objects['SG_UF_PROVA'] = Participant.objects.filter(SG_UF_PROVA=place).values('SG_UF_PROVA').annotate(COUNT = Count('SG_UF_PROVA')).order_by('SG_UF_PROVA')
+            query_objects['NU_NOTA'] = Participant.objects.filter(SG_UF_PROVA=place).values('SG_UF_PROVA').annotate(
+                SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
+                SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
+                SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
+                SUM_NU_NOTA_MT = Sum('NU_NOTA_MT'),
+                SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
+            ).order_by('SG_UF_PROVA')
+            for obj in query_objects['SG_UF_PROVA']:
+                for obj_sum in query_objects['NU_NOTA']:
+                    if (obj['SG_UF_PROVA'] == obj_sum['SG_UF_PROVA']):
+                        participants.append({"title": "Ciências Humanas", "value": obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']})
+                        participants.append({"title": "Ciências da Natureza", "value": obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']})
+                        participants.append({"title": "Linguagens e Códigos", "value": obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']})
+                        participants.append({"title": "Matemática", "value": obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']})
+                        participants.append({"title": "Redação", "value": obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT']})
+                        break
+        else:
+            query_objects['SG_UF_PROVA'] = Participant.objects.values('SG_UF_PROVA').annotate(COUNT = Count('SG_UF_PROVA')).order_by('SG_UF_PROVA')
+            query_objects['NU_NOTA'] = Participant.objects.values('SG_UF_PROVA').annotate(
+                SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
+                SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
+                SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
+                SUM_NU_NOTA_MT = Sum('NU_NOTA_MT'),
+                SUM_NU_NOTA_REDACAO = Sum('NU_NOTA_REDACAO')
+            ).order_by('SG_UF_PROVA')
+            for obj in query_objects['SG_UF_PROVA']:
+                for obj_sum in query_objects['NU_NOTA']:
+                    if (obj['SG_UF_PROVA'] == obj_sum['SG_UF_PROVA']):
+                        participants.append({
+                            "estado": obj['SG_UF_PROVA'],
+                            "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_REDACAO'] / obj['COUNT'])) / 5, 2)
+                        })
+                        break
+        data = {
+            'result': participants
+        }
+        return data
 
 @ajax
 @csrf_exempt

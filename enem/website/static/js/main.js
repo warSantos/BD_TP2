@@ -361,7 +361,6 @@ $('#performanceByGenreChart').click(function() {
     dataType: 'json',
     data: { 'place': Cookies.get('place') },
     success: function (data) {
-      console.log(data);
       showChart();
       dataProvider = [];
       values = {};
@@ -477,46 +476,72 @@ $('#performanceBySchoolChart').click(function() {
 
 $('#performanceByEstadosChart').click(function() {
   showLoading($(this).html());
+  place = Cookies.get('place');
   $.ajax({
+    type: "POST",
     url: 'performancebyestados',
     dataType: 'json',
+    data: { 'place': Cookies.get('place') },
     success: function(data){
       showChart();
-      AmCharts.makeChart("chart-area", {
-        "theme": "light",
-        "type": "serial",
-        "startDuration": 2,
-        "dataProvider":data.content.result,
-        "valueAxes": [{
-            "position": "left",
-            "title": "Nota-Media"
-        }],
-        "graphs": [{
-            "balloonText": "[[category]]: <b>[[value]]</b>",
-            "fillColorsField": "color",
-            "fillAlphas": 1,
-            "lineAlpha": 0.1,
-            "type": "column",
-            "valueField": "media"
-        }],
-        "depth3D": 10,
-      "angle": 30,
-        "chartCursor": {
-            "categoryBalloonEnabled": true,
-            "cursorAlpha": 0,
-            "zoomable": false
-        },
-        "categoryField": "estado",
-        "categoryAxis": {
-            "gridPosition": "start",
-            "labelRotation": 90
-        },
-        "export": {
-          "enabled": true
-         }
-    
-    });
-    
+      if (place == 'BR') {
+        AmCharts.makeChart("chart-area", {
+          "theme": "light",
+          "type": "serial",
+          "startDuration": 2,
+          "dataProvider": data.content.result,
+          "valueAxes": [{
+              "position": "left",
+              "title": "Nota-Media",
+              "maximum": 1000,
+              "minimum": 0
+          }],
+          "graphs": [{
+              "balloonText": "[[category]]: <b>[[value]]</b>",
+              "fillColorsField": "color",
+              "fillAlphas": 1,
+              "lineAlpha": 0.1,
+              "type": "column",
+              "valueField": "media"
+          }],
+          "depth3D": 10,
+        "angle": 30,
+          "chartCursor": {
+              "categoryBalloonEnabled": true,
+              "cursorAlpha": 0,
+              "zoomable": false
+          },
+          "categoryField": "estado",
+          "categoryAxis": {
+              "gridPosition": "start",
+              "labelRotation": 90
+          },
+          "export": {
+            "enabled": true
+          }
+        });
+      } else {
+        AmCharts.makeChart("chart-area", {
+          "type": "radar",
+          "theme": "light",
+          "dataProvider": data.content.result,
+          "startDuration": 1,
+          "valueAxes": [{
+            "maximum": 1000,
+            "minimum": 0
+          }],
+          "graphs": [{
+            "balloonText": "Nota: [[value]]",
+            "bullet": "round",
+            "lineThickness": 2,
+            "valueField": "value"
+          }],
+          "categoryField": "title",
+          "export": {
+            "enabled": true
+          }
+        });
+      }
     }
   });
 });
@@ -552,7 +577,7 @@ $('#situacaoEnsinoMedio').click(function() {
         "export": {
           "enabled": true
         }
-      } );
+      });
     },
     error: function(){
       console.log("Deu ruim man");
@@ -571,7 +596,6 @@ $('#performanceByEtinicoChart').click(function(){
     dataType: 'json',
     data: { 'place': Cookies.get('place') },
     success: function(data){
-      console.log(data);
       showChart();
       AmCharts.makeChart("chart-area", {
         "type": "pie",  
