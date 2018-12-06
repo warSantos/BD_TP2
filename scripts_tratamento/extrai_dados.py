@@ -27,9 +27,7 @@ def criar_mascara (atributos, at_utilizados):
 	# Criando mascara de bit para identificar quais atributos
 	# Serao levados.
 	for a in lista_atributos:
-		print a
 		if a in lista_at_ut:
-			print a
 			mascara[cont] = 1
 			tipos.append (a.split()[1])
 		cont += 1
@@ -50,7 +48,6 @@ def extrair_dados (mascara, arquivo_dados):
 				att = tokens[cont].replace('\n','').replace ('\r','')
 				temp.append (att)
 			cont += 1
-		print len(temp), ' ', len (mascara)
 		dados_finais.append (temp)
 	return dados_finais
 
