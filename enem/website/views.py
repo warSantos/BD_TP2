@@ -186,6 +186,12 @@ def dataPerformanceByGenreView(request):
 @ajax
 @csrf_exempt
 def dataPerformanceBySchoolView(request):
+    titles = {
+        '1': "Não Respondeu",
+        '2': "Pública",
+        '3': "Privada",
+        '4': "Exterior"
+    }
     if (request.method == 'POST'):
         place = request.POST.get('place')
         query_objects = {}
@@ -196,17 +202,22 @@ def dataPerformanceBySchoolView(request):
                 SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
                 SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
                 SUM_NU_NOTA_MT = Sum('NU_NOTA_MT')
-            ).order_by('TP_SEXO')
+            ).order_by('TP_ESCOLA')
+        else:
+            query_objects['TP_ESCOLA'] = Participant.objects.values('TP_ESCOLA').annotate(COUNT = Count('TP_ESCOLA')).order_by('TP_ESCOLA')
+            query_objects['NU_NOTA'] = Participant.objects.values('TP_ESCOLA').annotate(
+                SUM_NU_NOTA_CN = Sum('NU_NOTA_CN'),
+                SUM_NU_NOTA_CH = Sum('NU_NOTA_CH'),
+                SUM_NU_NOTA_LC = Sum('NU_NOTA_LC'),
+                SUM_NU_NOTA_MT = Sum('NU_NOTA_MT')
+            ).order_by('TP_ESCOLA')
         participants = []
         for obj in query_objects['TP_ESCOLA']:
             for obj_sum in query_objects['NU_NOTA']:
                 if (obj['TP_ESCOLA'] == obj_sum['TP_ESCOLA']):
                     participants.append({
-                        "escola": obj['TP_ESCOLA'],
-                        "media_NOTA_CN": obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT'],
-                        "media_NOTA_CH": obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT'],
-                        "media_NOTA_LC": obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT'],
-                        "media_NOTA_MT": obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT']
+                        "escola": titles[obj["TP_ESCOLA"]],
+                        "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4, 2)
                     })
                     break
         data = {
@@ -228,10 +239,9 @@ def dataperformanceByEstadosView(request):
     for obj in query_objects['SG_UF_PROVA']:
         for obj_sum in query_objects['NU_NOTA']:
             if (obj['SG_UF_PROVA'] == obj_sum['SG_UF_PROVA']):
-                media = ((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4
                 participants.append({
                     "estado": obj['SG_UF_PROVA'],
-                    "media": media
+                    "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4, 2)
                 })
                 break
     data = {
@@ -282,13 +292,11 @@ def dataperformanceByEtinicoView(request):
             for obj in query_objects['TP_COR_RACA']:
                 for obj_sum in query_objects['NU_NOTA']:
                     if (obj['TP_COR_RACA'] == obj_sum['TP_COR_RACA']):
-                        media = ((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4
                         participants.append({
                             "cor": obj['TP_COR_RACA'],
-                            "media": media
+                            "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4, 2)
                         })
                         break
-
         else:
             query_objects['TP_COR_RACA'] = Participant.objects.values('TP_COR_RACA').annotate(COUNT = Count('TP_COR_RACA')).order_by('TP_COR_RACA')
             query_objects['NU_NOTA'] = Participant.objects.values('TP_COR_RACA').annotate(
@@ -301,10 +309,9 @@ def dataperformanceByEtinicoView(request):
             for obj in query_objects['TP_COR_RACA']:
                 for obj_sum in query_objects['NU_NOTA']:
                     if (obj['TP_COR_RACA'] == obj_sum['TP_COR_RACA']):
-                        media = ((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4
                         participants.append({
                             "cor": obj['TP_COR_RACA'],
-                            "media": media
+                            "media": round(((obj_sum['SUM_NU_NOTA_CN'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_CH'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_LC'] / obj['COUNT']) + (obj_sum['SUM_NU_NOTA_MT'] / obj['COUNT'])) / 4, 2)
                         })
                         break
         data = {
