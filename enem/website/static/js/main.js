@@ -11,37 +11,47 @@ function showChart() {
   $('#chart-area').show();
 }
 
+function hideChart() {
+  $('.chart-title').html("");
+  $('#chart-area').hide();
+  $('#chart-content').hide("slow");
+}
+
 $('#confButton').click(function() {
-  showLoading("Estados");
-  showChart();
-  Cookies.set('place', 'BR');
-  $("#place").html(Cookies.get('place'));
-  AmCharts.makeChart( "chart-area", {
-    "type": "map",
-    "theme": "light",
-    "panEventsEnabled": true,
-    "dataProvider": {
-      "map": "brazilLow",
-      "getAreasFromMap": true
-    },
-    "areasSettings": {
-      "autoZoom": false,
-      "color": "#CDCDCD",
-      "colorSolid": "#5EB7DE",
-      "selectedColor": "#5EB7DE",
-      "outlineColor": "#666666",
-      "rollOverColor": "#88CAE7",
-      "rollOverOutlineColor": "#FFFFFF",
-      "selectable": true
-    },
-    "listeners": [{
-      "event": "clickMapObject",
-      "method": function( event ) {
-        Cookies.set('place', event.mapObject.id.substring(3, 6));
-        $("#place").html(Cookies.get('place'));
-      }
-    }]
-  } );
+  if (($("#chart-area").is(":visible")) && ($('.chart-title').html() == "Estados")) {
+    hideChart();
+  } else {
+    showLoading("Estados");
+    showChart();
+    Cookies.set('place', 'BR');
+    $("#place").html(Cookies.get('place'));
+    AmCharts.makeChart( "chart-area", {
+      "type": "map",
+      "theme": "light",
+      "panEventsEnabled": true,
+      "dataProvider": {
+        "map": "brazilLow",
+        "getAreasFromMap": true
+      },
+      "areasSettings": {
+        "autoZoom": false,
+        "color": "#CDCDCD",
+        "colorSolid": "#5EB7DE",
+        "selectedColor": "#5EB7DE",
+        "outlineColor": "#666666",
+        "rollOverColor": "#88CAE7",
+        "rollOverOutlineColor": "#FFFFFF",
+        "selectable": true
+      },
+      "listeners": [{
+        "event": "clickMapObject",
+        "method": function( event ) {
+          Cookies.set('place', event.mapObject.id.substring(3, 6));
+          $("#place").html(Cookies.get('place'));
+        }
+      }]
+    });
+  }
 });
 
 $('#numberByGenreChart').click(function() {

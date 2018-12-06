@@ -134,7 +134,7 @@ def dataNumberByPresenceView(request):
                 participants_data['Eliminados'] = obj['COUNT']
         participants.append(participants_data)
         data = {
-        'result': participants
+            'result': participants
         }
         return data
 
